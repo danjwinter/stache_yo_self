@@ -17,6 +17,7 @@ gem 'rspec-rails'
 gem 'omniauth-facebook'
 gem 'bootstrap-sass'
 gem 'figaro'
+gem 'rails_12factor', group: :production
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
