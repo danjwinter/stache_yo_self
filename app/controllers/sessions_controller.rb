@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def create
-    byebug
     begin
       @user = User.from_omniauth(request.env['omniauth.auth'])
       session[:user_id] = @user.id
@@ -8,7 +7,7 @@ class SessionsController < ApplicationController
     rescue
       flash[:warning] = "There was an error while trying to authenticate you..."
     end
-    redirect_to root_path
+    redirect_to user_path
   end
 
   def destroy

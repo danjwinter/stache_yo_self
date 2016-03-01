@@ -4,4 +4,8 @@ class HomeController < ApplicationController
 
   def privacy
   end
+
+  def show
+    byebug
+  end
 end
