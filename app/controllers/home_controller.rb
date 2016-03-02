@@ -6,6 +6,6 @@ class HomeController < ApplicationController
   end
 
   def show
-    byebug
+    # byebug
   end
 end
