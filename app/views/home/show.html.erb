@@ -12,11 +12,12 @@
       data-mouth-right-x="<%= @pic.mouth_right_x %>"
       data-nose-y="<%= @pic.nose_y %>"
       ></canvas>
-
       <script type="text/javascript">
+
         var canvas = document.getElementById("canvas");
         ctx = canvas.getContext("2d");
         var userImage = new Image();
+        userImage.crossOrigin="anonymous";
 
         userImage.onload = function(){
           var width = userImage.clientWidth;
@@ -29,6 +30,7 @@
           document.body.removeChild(userImage);
 
           var stacheImage = new Image;
+          stacheImage.crossOrigin="anonymous";
           stacheImage.onload = function(){
             var width = userImage.clientWidth;
             var height = userImage.clientHeight;
@@ -40,12 +42,12 @@
             ctx.scale(inScaleWidth,inScaleWidth)
             ctx.drawImage(stacheImage,-50,-80);
             document.body.removeChild(stacheImage)
-            var data = canvas.toDataURL('image/jpeg');
-            var blob = dataURItoBlob(dataURL);
-            var fd = new FormData(document.forms[0]);
-            fd.append("canvasImage", blob);
+            // var data = canvas.toDataURL('image/jpeg');
+            // var blob = dataURItoBlob(data);
+            // var fd = new FormData(document.forms[0]);
+            // fd.append("canvasImage", blob);
           }
-          stacheImage.src = "http://i.imgur.com/rJ71NVK.png"
+          stacheImage.src = "<%= current_user.stache_image(:medium) %>"
           document.body.appendChild(stacheImage);
 
         }
@@ -53,35 +55,20 @@
       // y mouthavg  48.61916675 * 4
       // width 11.839166 * 4
 
-        userImage.src = "http://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg";
+        userImage.src = "<%= current_user.image(:medium) %>";
 
         document.body.appendChild(userImage);
 
-        function dataURItoBlob(dataURI) {
-    // convert base64/URLEncoded data component to raw binary data held in a string
-    var byteString;
-    if (dataURI.split(',')[0].indexOf('base64') >= 0)
-        byteString = atob(dataURI.split(',')[1]);
-    else
-        byteString = unescape(dataURI.split(',')[1]);
 
-    // separate out the mime component
-    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
-
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ia], {type:mimeString});
-}
       </script>
-      <%= form_for(:pic, url: '/save_that_stache') do |f| %>
-        <%= f.submit "Save Stached Me" %>
+
+      <button id="save-image" type="button" name="button">Save Stached Photo</button>
+      <%= form_tag('/save_that_stache') do |f| %>
+
+        <%= submit_tag "Save Stached Me" %>
       <% end %>
       <div class="center-block">
-        <%= image_tag current_user.image_url, alt: current_user.name, class: "user_image" %>
+        <%= image_tag current_user.image.url, alt: current_user.name, class: "user_image" %>
       </div>
       <ul>
         <li><strong>Name:</strong> <%= current_user.name %></li>
