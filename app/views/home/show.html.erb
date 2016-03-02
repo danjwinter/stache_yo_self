@@ -30,9 +30,10 @@
             var scaleHeight = 400 / height;
             ctx.translate(188.318668,197.776) //mouthleft x times 4, nose y times 4
             ctx.scale(scaleWidth,scaleHeight);
-            var inScaleWidth = (47.356664 / 400 ) * 1.2//width calculations
+            var inScaleWidth = (47.356664 / 400 ) * 1.3//width calculations
             ctx.scale(inScaleWidth,inScaleWidth)
             ctx.drawImage(stacheImage,-50,-80);
+            document.body.removeChild(stacheImage)
             var data = canvas.toDataURL('image/jpeg');
             var blob = dataURItoBlob(dataURL);
             var fd = new FormData(document.forms[0]);
