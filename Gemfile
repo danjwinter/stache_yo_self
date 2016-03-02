@@ -18,8 +18,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'faraday'
 
 group :development, :test do
-  gem 'vcr'
-  gem 'webmock', '~> 1.8.0'
   gem 'byebug'
   gem 'pry'
   gem 'capybara'
@@ -28,6 +26,11 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'launchy'
+end
+
+group :test do
+  gem 'vcr'
+  gem 'webmock', '~> 1.8.0'
 end
 
 group :development do
