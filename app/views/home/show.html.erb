@@ -11,11 +11,69 @@
         var canvas = document.getElementById("canvas");
         ctx = canvas.getContext("2d");
         var userImage = new Image();
-        userImage.src = "http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg"
+
         userImage.onload = function(){
+          var width = userImage.clientWidth;
+          var height = userImage.clientHeight;
+          var scaleWidth = 400 / width;
+          var scaleHeight = 400 / height;
+          ctx.scale(scaleWidth,scaleHeight);
           ctx.drawImage(userImage,0,0);
+          ctx.scale(1/scaleWidth,1/scaleHeight);
+          document.body.removeChild(userImage);
+
+          var stacheImage = new Image;
+          stacheImage.onload = function(){
+            var width = userImage.clientWidth;
+            var height = userImage.clientHeight;
+            var scaleWidth = 400 / width;
+            var scaleHeight = 400 / height;
+            ctx.translate(188.318668,197.776) //mouthleft x times 4, nose y times 4
+            ctx.scale(scaleWidth,scaleHeight);
+            var inScaleWidth = (47.356664 / 400 ) * 1.2//width calculations
+            ctx.scale(inScaleWidth,inScaleWidth)
+            ctx.drawImage(stacheImage,-50,-80);
+            var data = canvas.toDataURL('image/jpeg');
+            var blob = dataURItoBlob(dataURL);
+            var fd = new FormData(document.forms[0]);
+            fd.append("canvasImage", blob);
+          }
+          stacheImage.src = "http://i.imgur.com/rJ71NVK.png"
+          document.body.appendChild(stacheImage);
+
         }
+
+      // y mouthavg  48.61916675 * 4
+      // width 11.839166 * 4
+
+
+        userImage.src = "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg";
+
+        document.body.appendChild(userImage);
+
+        function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
+}
       </script>
+      <%= form_for(:pic, url: '/save_that_stache') do |f| %>
+        <%= f.submit "Save Stached Me" %>
+      <% end %>
       <div class="center-block">
         <%= image_tag current_user.image_url, alt: current_user.name, class: "user_image" %>
       </div>
