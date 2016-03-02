@@ -4,6 +4,21 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-body">
+
+      <canvas id="canvas" width="400" height="400"></canvas>
+
+      <script type="text/javascript">
+        var canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+        var userImage = new Image();
+        userImage.src = "http://static6.businessinsider.com/image/55918b77ecad04a3465a0a63/nbc-fires-donald-trump-after-he-calls-mexicans-rapists-and-drug-runners.jpg"
+        userImage.onload = function(){
+          ctx.drawImage(userImage,0,0);
+        }
+      </script>
+      <div class="center-block">
+        <%= image_tag current_user.image_url, alt: current_user.name, class: "user_image" %>
+      </div>
       <ul>
         <li><strong>Name:</strong> <%= current_user.name %></li>
         <li><strong>Provider:</strong> <%= current_user.provider %></li>
