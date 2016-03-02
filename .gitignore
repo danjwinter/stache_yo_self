@@ -16,3 +16,7 @@
 /config/application.yml
 */application.yml
 .rbenv-vars
+
+/coverage
+
+/spec/vcr

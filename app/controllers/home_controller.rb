@@ -6,6 +6,5 @@ class HomeController < ApplicationController
   end
 
   def show
-
   end
 end
