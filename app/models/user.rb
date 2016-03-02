@@ -8,4 +8,8 @@ class User < ActiveRecord::Base
     user.save!
     user
   end
+
+  def send_for_face_detection
+
+  end
 end
