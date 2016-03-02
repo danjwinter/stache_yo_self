@@ -11,10 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160301142812) do
+ActiveRecord::Schema.define(version: 20160302172213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "slack_pics", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "face_id"
+    t.decimal  "height"
+    t.decimal  "width"
+    t.decimal  "mouth_left_x"
+    t.decimal  "mouth_left_y"
+    t.decimal  "mouth_right_x"
+    t.decimal  "mouth_right_y"
+    t.decimal  "nose_x"
+    t.decimal  "nose_y"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "slack_pics", ["user_id"], name: "index_slack_pics_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "provider"
@@ -26,4 +43,5 @@ ActiveRecord::Schema.define(version: 20160301142812) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "slack_pics", "users"
 end

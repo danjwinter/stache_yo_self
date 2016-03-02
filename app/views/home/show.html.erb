@@ -5,7 +5,13 @@
   <div class="panel panel-default">
     <div class="panel-body">
 
-      <canvas id="canvas" width="400" height="400"></canvas>
+      <canvas id="canvas"
+      width="400"
+      height="400"
+      data-mouth-left-x="<%= @pic.mouth_left_x %>"
+      data-mouth-right-x="<%= @pic.mouth_right_x %>"
+      data-nose-y="<%= @pic.nose_y %>"
+      ></canvas>
 
       <script type="text/javascript">
         var canvas = document.getElementById("canvas");
@@ -30,7 +36,7 @@
             var scaleHeight = 400 / height;
             ctx.translate(188.318668,197.776) //mouthleft x times 4, nose y times 4
             ctx.scale(scaleWidth,scaleHeight);
-            var inScaleWidth = (47.356664 / 400 ) * 1.3//width calculations
+            var inScaleWidth = (47.356664 / 400 ) * 1.3//width calculations (mouth left x - mouth right x)
             ctx.scale(inScaleWidth,inScaleWidth)
             ctx.drawImage(stacheImage,-50,-80);
             document.body.removeChild(stacheImage)
@@ -47,7 +53,7 @@
       // y mouthavg  48.61916675 * 4
       // width 11.839166 * 4
 
-        userImage.src = "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg";
+        userImage.src = "http://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg";
 
         document.body.appendChild(userImage);
 

@@ -6,6 +6,6 @@ class HomeController < ApplicationController
   end
 
   def show
-
+    @pic = current_user.slack_pics.last
   end
 end
