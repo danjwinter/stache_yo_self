@@ -6,6 +6,6 @@ class HomeController < ApplicationController
   end
 
   def show
-    # byebug
+    # binding.pry
   end
 end
