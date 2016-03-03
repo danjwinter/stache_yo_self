@@ -28,7 +28,7 @@ class SlackService
   end
 
   def user_info
-    parse(connection.get('users.info', user: user_id, token: ENV['SLACK_key']))
+    parse(connection.get('users.info', user: user_id, token: ENV['SLACK_BOT_TOKEN']))
   end
 
   private
