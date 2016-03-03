@@ -14,6 +14,10 @@ class FacePlusPlusService
     parse(connection.get("detection/detect", mode: "oneface", api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET'], url: user.image_url))
   end
 
+  def more_details
+    parse(connection.get("detection/landmark", face_id: user.slack_pics.last.face_id, api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET']))
+  end
+
 
   private
 

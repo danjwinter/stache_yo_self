@@ -89,6 +89,11 @@ GEM
       thor (~> 0.14)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gon (6.0.1)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     hashie (3.4.3)
     i18n (0.7.0)
     jbuilder (2.4.1)
@@ -176,6 +181,7 @@ GEM
     rake (10.5.0)
     rdoc (4.2.2)
       json (~> 1.4)
+    request_store (1.3.0)
     rspec-core (3.4.3)
       rspec-support (~> 3.4.0)
     rspec-expectations (3.4.0)
@@ -251,6 +257,7 @@ DEPENDENCIES
   database_cleaner
   faraday
   figaro
+  gon
   jbuilder (~> 2.0)
   jquery-rails
   launchy

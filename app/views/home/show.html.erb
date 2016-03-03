@@ -36,18 +36,19 @@
             var height = userImage.clientHeight;
             var scaleWidth = 400 / width;
             var scaleHeight = 400 / height;
-            ctx.translate(188.318668,197.776) //mouthleft x times 4, nose y times 4
+
+            ctx.translate(gon.translate_x,gon.translate_y)
+            // ctx.translate(182.60999,187.1263335) //mouthleft x times 4, nose y times 4
+            // ctx.translate(188.318668,194.47666) //mouthleft x times 4, nose y times 4
             ctx.scale(scaleWidth,scaleHeight);
-            var inScaleWidth = (47.356664 / 400 ) * 1.3//width calculations (mouth left x - mouth right x)
+            var inScaleWidth = gon.inner_scale_width
+            // var inScaleWidth = (47.356664 / 400 ) * 1.3//width calculations (mouth left x - mouth right x)
             ctx.scale(inScaleWidth,inScaleWidth)
-            ctx.drawImage(stacheImage,-50,-80);
+            ctx.drawImage(stacheImage,0,0);
+            // ctx.drawImage(stacheImage,-50,-80);
             document.body.removeChild(stacheImage)
-            // var data = canvas.toDataURL('image/jpeg');
-            // var blob = dataURItoBlob(data);
-            // var fd = new FormData(document.forms[0]);
-            // fd.append("canvasImage", blob);
           }
-          stacheImage.src = "<%= current_user.stache_image(:medium) %>"
+          stacheImage.src = gon.path
           document.body.appendChild(stacheImage);
 
         }
