@@ -32,9 +32,16 @@ class User < ActiveRecord::Base
     user.token = auth_hash['credentials']['token']
     user.image = URI.parse(user.image_url)
     user.stache_image = URI.parse("http://i.imgur.com/rJ71NVK.png")
+    binding.pry
+    # U09UB1KCN
     user.save!
     user.send_for_face_detection
     user
+  end
+
+  def self.from_slack(params)
+    user = find_or_create_by(user_id: params[:user_id])
+
   end
 
   def send_for_face_detection
