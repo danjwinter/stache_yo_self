@@ -19,6 +19,7 @@ gem 'faraday'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'gon'
+gem 'rmagick'
 
 group :development, :test do
   gem 'byebug'

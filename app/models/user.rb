@@ -39,9 +39,10 @@ class User < ActiveRecord::Base
 
   def send_for_face_detection
     fpps = FacePlusPlusService.new(self)
+    # binding.pry
     face_data = fpps.detect_face
     SlackPicCreation.new(self, face_data).create
-    binding.pry
+    # binding.pry
   end
 
   def decode_base64_image(image_data)

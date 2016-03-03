@@ -31,6 +31,6 @@ class StacheCalculations
   def mouth_ys_and_nose_y_avg
     mouth_avg = (slack_pic.mouth_left_y + slack_pic.mouth_right_y) / 2
     mouth_and_nose_y_avg = (mouth_avg + slack_pic.nose_y) / 2
-    (mouth_and_nose_y_avg + slack_pic.nose_y) / 2
+    (mouth_and_nose_y_avg + slack_pic.nose_y * 2) / 3
   end
 end
