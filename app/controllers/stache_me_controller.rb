@@ -1,4 +1,4 @@
-class StacheMe < ApplicationController
+class StacheMeController < ApplicationController
 
   def show
     user_id = params['user_id']
