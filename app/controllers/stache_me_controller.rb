@@ -2,6 +2,12 @@ class StacheMeController < ApplicationController
 
   def show
     # binding.pry
+        response = {
+      "response_type": "in_channel",
+      "text": "So you want a mustache, eh?"
+    }
+    render json: response
+    Thread.new {
     user = User.from_slack(params)
 
     @pic = user.slack_pics.last
@@ -17,24 +23,13 @@ class StacheMeController < ApplicationController
 
     user.stached_user_image = processed_image
     user.save!
-    SlackService.new(user).post_image(user.channel, "25th attempt", "Sweet pic title", user.stached_user_image.url)
+    SlackService.new(user).post_image(user.channel, "Stached!", "Sweet pic title", user.stached_user_image.url)
     # binding.pry
     response = {text: "Stached!",
                 attachments: [{title: "ATitle",
                                image_url: user.stached_user_image.url}]}
-#     response = {
-#   "response_type": "in_channel",
-#   "text": "ymbed by :troll:\n:rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake:"
-# }
+                             }
 
-
-#
-# parse(connection.post("chat.postMessage",
-#                       channel: channel,
-#                       text: text,
-#                       token: ENV['SLACK_BOT_TOKEN'],
-#                       attachments: "[{'title':#{title},'image_url': #{image_url}}]"))
-render json: response
   end
 end
 

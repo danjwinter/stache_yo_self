@@ -24,7 +24,7 @@ class SlackService
                           channel: channel,
                           text: text,
                           token: ENV['SLACK_BOT_TOKEN'],
-                          attachments: '[{"title":"ATitle","image_url": "' + image_url + '"}]'))
+                          attachments: '[{"title":"'+ title + '","image_url": "' + image_url + '"}]'))
   end
 
   def user_info
