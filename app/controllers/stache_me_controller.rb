@@ -1,12 +1,54 @@
 class StacheMeController < ApplicationController
 
   def show
-    user_id = params['user_id']
-    response = SlackService.new(nil, user_id).user_info.to_json
+    # binding.pry
+    user = User.from_slack(params)
+
+    @pic = user.slack_pics.last
+    slack_pic = Magick::Image.read(user.image.url).first
+    sc = StacheCalculations.new(@pic)
+    sized_slack_pic = slack_pic.resize_to_fill(400,400)
+    stache_pic = Magick::Image.read("#{Rails.root}/app/assets/images/stache_1.png").first
+    stache_scale = sc.stache_scale_width_enlarged * 400 * 1.2
+    sized_stache = stache_pic.resize_to_fit(stache_scale,stache_scale)
+    stached_slack_pic = sized_slack_pic.composite(sized_stache, sc.translate_x, sc.translate_y, Magick::OverCompositeOp)
+
+    processed_image = StringIO.open(stached_slack_pic.to_blob)
+
+    user.stached_user_image = processed_image
+    user.save!
+    SlackService.new(user).post_image(user.channel, "25th attempt", "Sweet pic title", user.stached_user_image.url)
+    # binding.pry
+    response = {text: "Stached!",
+                attachments: [{title: "ATitle",
+                               image_url: user.stached_user_image.url}]}
 #     response = {
 #   "response_type": "in_channel",
 #   "text": "ymbed by :troll:\n:rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake::rake:"
 # }
+
+
+#
+# parse(connection.post("chat.postMessage",
+#                       channel: channel,
+#                       text: text,
+#                       token: ENV['SLACK_BOT_TOKEN'],
+#                       attachments: "[{'title':#{title},'image_url': #{image_url}}]"))
 render json: response
   end
 end
+
+
+# {"token"=>"HuOiI6EwL4DG57ZY0ZqP6UCV",
+#  "team_id"=>"T029P2S9M",
+#  "team_domain"=>"turingschool",
+#  "channel_id"=>"C0PQ0FVJ8",
+#  "channel_name"=>"test-mustache",
+#  "user_id"=>"U09UB1KCN",
+#  "user_name"=>"dan.winter",
+#  "command"=>"/stache_me",
+#  "text"=>"",
+#  "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/24662857762/cxyEwotsjSykD2OLnshQMtNk",
+#  "formats"=>{"default"=>:json},
+#  "controller"=>"stache_me",
+#  "action"=>"show"}
