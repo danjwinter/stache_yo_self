@@ -16,12 +16,11 @@ class StacheMeController < ApplicationController
 
   def gather_and_send_stached_photo_response
     user = User.from_slack(params)
-    # user.send_for_face_detection
     if user.headless?
       SlackService.new(user).post_headless_response
     else
       StacheThatPic.add_stache_to(user)
-      SlackService.new(user).post_image("Stached!", "Sweet pic title")
+      SlackService.new(user).post_image("With A Great Stache Comes Great Responsibility", "#{user.name} just got stached!")
     end
   end
 end

@@ -39,11 +39,11 @@ class User < ActiveRecord::Base
   end
 
   def self.from_slack(params)
-    # binding.pry
     user = find_or_create_by(uid: params[:user_id])
     user.channel = params["channel_id"]
     user_info = SlackService.new(nil, params[:user_id]).user_info
     user.image_url = user_info['user']['profile']['image_512']
+    user.name = user_info['user']['real_name']
     user.image = URI.parse(user.image_url)
     user.save!
     user.send_for_face_detection
