@@ -43,10 +43,10 @@ class User < ActiveRecord::Base
     user = find_or_create_by(uid: params[:user_id])
     user.channel = params["channel_id"]
     user_info = SlackService.new(nil, params[:user_id]).user_info
-
+    user.image_url = user_info['user']['profile']['image_512']
     user.image = URI.parse(user.image_url)
     user.save!
-    user.send_for_face_detection
+
     user
   end
 
@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
     face_data = fpps.detect_face
     SlackPicCreation.new(self, face_data).create
   end
+
 
   # def decode_base64_image(image_data)
   #     # if image_data && content_type && original_filename
