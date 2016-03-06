@@ -5,18 +5,11 @@ class SlackService
     @connection ||= Faraday.new(url: "https://slack.com/api/") do |faraday|
       faraday.request :url_encoded
       faraday.request :multipart
-      # faraday.headers['Content-Type'] = 'application/json'
       faraday.adapter Faraday.default_adapter
     end
     @user = user
     @user_id = user_id
 
-  end
-
-  def list_channels
-    channel_response['channels'].map do |channel|
-      Channel.new(channel)
-    end
   end
 
   def post_image(text="test", title="test-title")
@@ -46,15 +39,7 @@ class SlackService
 
   private
 
-  def channel_response
-    parse(connection.get("channels.list", token: user.token, exclude_archived: 1))
-  end
-
   def parse(response)
     JSON.parse(response.body, symbolize_name: true)
-  end
-
-  def add_token_to_headers
-    connection.headers = {token: user.token}
   end
 end

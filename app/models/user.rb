@@ -25,19 +25,6 @@ class User < ActiveRecord::Base
   }
   do_not_validate_attachment_file_type :stached_user_image
 
-
-  def self.from_omniauth(auth_hash)
-    user = find_or_create_by(uid: auth_hash['uid'], provider: auth_hash['provider'])
-    user.name = auth_hash['extra']['user_info']['user']['profile']['real_name']
-    user.image_url = auth_hash['extra']['user_info']['user']['profile']['image_1024']
-    user.token = auth_hash['credentials']['token']
-    user.image = URI.parse(user.image_url)
-    user.stache_image = URI.parse("http://i.imgur.com/rJ71NVK.png")
-    user.save!
-    user.send_for_face_detection
-    user
-  end
-
   def self.from_slack(params)
     user = find_or_create_by(uid: params[:user_id])
     user.channel = params["channel_id"]

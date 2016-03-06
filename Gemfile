@@ -7,8 +7,6 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'rspec-rails'
-gem 'omniauth-slack'
-gem 'bootstrap-sass'
 gem 'figaro'
 gem 'rails_12factor', group: :production
 gem 'jquery-rails'
@@ -19,7 +17,6 @@ gem 'faraday'
 gem 'paperclip'
 gem 'aws-sdk', '~>1.66.0'
 gem 'factory_girl_rails'
-gem 'gon'
 gem 'rmagick'
 
 group :development, :test do
