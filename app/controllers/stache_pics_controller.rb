@@ -1,6 +1,7 @@
-class StacheMeController < ApplicationController
+class StachePicsController < ApplicationController
 
-  def show
+  def create
+    # binding.pry
         response = {
       "response_type": "in_channel",
       "text": "So you want a mustache, eh?"
@@ -24,18 +25,3 @@ class StacheMeController < ApplicationController
     end
   end
 end
-
-
-# {"token"=>"HuOiI6EwL4DG57ZY0ZqP6UCV",
-#  "team_id"=>"T029P2S9M",
-#  "team_domain"=>"turingschool",
-#  "channel_id"=>"C0PQ0FVJ8",
-#  "channel_name"=>"test-mustache",
-#  "user_id"=>"U09UB1KCN",
-#  "user_name"=>"dan.winter",
-#  "command"=>"/stache_me",
-#  "text"=>"",
-#  "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/24662857762/cxyEwotsjSykD2OLnshQMtNk",
-#  "formats"=>{"default"=>:json},
-#  "controller"=>"stache_me",
-#  "action"=>"show"}

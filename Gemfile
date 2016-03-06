@@ -17,7 +17,8 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'faraday'
 gem 'paperclip'
-gem 'aws-sdk'
+gem 'aws-sdk', '~>1.66.0'
+
 gem 'gon'
 gem 'rmagick'
 
