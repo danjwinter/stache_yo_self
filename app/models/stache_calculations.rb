@@ -6,7 +6,7 @@ class StacheCalculations
   end
 
   def translate_x
-    ((slack_pic.nose_x * 4) - (stache_width * 2.25)).to_f
+    mouth_xs_avg - (stache_scale_width_enlarged / 2)
   end
 
 
@@ -15,7 +15,7 @@ class StacheCalculations
   end
 
   def stache_scale_width_enlarged
-    (stache_scale_width * 1.3).to_f
+    (stache_scale_width * 1.3 * 400 * 1.2).to_f
   end
 
   private
@@ -24,13 +24,13 @@ class StacheCalculations
     (slack_pic.mouth_right_x - slack_pic.mouth_left_x) / 100
   end
 
-  def stache_width
-    (slack_pic.mouth_right_x - slack_pic.mouth_left_x) * 1.3
-  end
-
   def mouth_ys_and_nose_y_avg
     mouth_avg = (slack_pic.mouth_left_y + slack_pic.mouth_right_y) / 2
     mouth_and_nose_y_avg = (mouth_avg + slack_pic.nose_y) / 2
     (mouth_and_nose_y_avg + slack_pic.nose_y * 2) / 3
+  end
+
+  def mouth_xs_avg
+    (slack_pic.mouth_left_x * 4 + slack_pic.mouth_right_x * 4) / 2
   end
 end

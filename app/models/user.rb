@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     user.image_url = user_info['user']['profile']['image_512']
     user.image = URI.parse(user.image_url)
     user.save!
-
+    user.send_for_face_detection
     user
   end
 
@@ -56,22 +56,20 @@ class User < ActiveRecord::Base
     SlackPicCreation.new(self, face_data).create
   end
 
+  def get_that_head_a_stache
+    # binding.pry
+      pic = slack_pics.last
+      slack_pic = Magick::Image.read(image.url).first
+      sc = StacheCalculations.new(pic)
+      sized_slack_pic = slack_pic.resize_to_fill(400,400)
+      stache_pic = Magick::Image.read("#{Rails.root}/app/assets/images/stache_1.png").first
+      stache_scale = sc.stache_scale_width_enlarged * 400 * 1.2
+      sized_stache = stache_pic.resize_to_fit(stache_scale,stache_scale)
+      stached_slack_pic = sized_slack_pic.composite(sized_stache, sc.translate_x, sc.translate_y, Magick::OverCompositeOp)
 
-  # def decode_base64_image(image_data)
-  #     # if image_data && content_type && original_filename
-  #     # binding.pry
-  #       decoded_data = Base64.decode64(image_data)
-  #       data = StringIO.new(decoded_data)
-  #       data.class_eval do
-  #         attr_accessor :content_type, :original_filename
-  #       end
-  #
-  #       # data.content_type = content_type
-  #       # data.original_filename = File.basename(original_filename)
-  #       data.content_type = "image/jpg"
-  #       data.original_filename = File.basename("stached_image.jpg")
-  #
-  #       self.stached_user_image = data
-  #     end
-    # end
+      processed_image = StringIO.open(stached_slack_pic.to_blob)
+
+      user.stached_user_image = processed_image
+      user.save!
+  end
 end
