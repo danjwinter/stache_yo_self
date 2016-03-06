@@ -8,11 +8,43 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'vcr'
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    # Choose a test framework:
+    with.test_framework :rspec
+
+
+    # Choose one or more libraries:
+    # Or, choose the following (which implies all of the above):
+    with.library :rails
+  end
+end
+
 VCR.configure do |c|
   c.cassette_library_dir = "spec/vcr"
   c.hook_into :webmock
   c.allow_http_connections_when_no_cassette = true
 end
+
+def json_response
+  @json_response ||= JSON.parse(response.body, symbolize_names: true)
+end
+
+def simulated_slack_slash_stache_me
+  {"token"=>ENV['SLACK_SLASH_TOKEN'],
+   "team_id"=>"T029P2S9M",
+   "team_domain"=>"turingschool",
+   "channel_id"=>"C0PQ0FVJ8",
+   "channel_name"=>"test-mustache",
+   "user_id"=>"U09UB1KCN",
+   "user_name"=>"dan.winter",
+   "command"=>"/stache_me",
+   "text"=>"",
+   "response_url"=>"https://hooks.slack.com/commands/T029P2S9M/24662857762/cxyEwotsjSykD2OLnshQMtNk",
+   "formats"=>{"default"=>:json},
+   "controller"=>"stache_me",
+   "action"=>"show"}
+ end
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
