@@ -3,7 +3,7 @@ class StacheThatPic
   def self.add_stache_to(user)
     pic = user.slack_pics.last
     slack_pic = Magick::Image.read(user.image.url).first
-    sc = StacheCalculations.new(pic)
+    sc = StacheCalculation.new(pic)
     sized_slack_pic = slack_pic.resize_to_fill(400,400)
     stache_pic = Magick::Image.read("#{Rails.root}/app/assets/images/stache_1.png").first
     stache_scale = sc.stache_scale_width_enlarged

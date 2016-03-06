@@ -1,4 +1,4 @@
-class StacheCalculations
+class StacheCalculation
   attr_reader :slack_pic
 
   def initialize(slack_pic)
@@ -8,7 +8,6 @@ class StacheCalculations
   def translate_x
     mouth_xs_avg - (stache_scale_width_enlarged / 2)
   end
-
 
   def translate_y
     (mouth_ys_and_nose_y_avg * 4).to_f

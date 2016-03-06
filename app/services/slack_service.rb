@@ -1,15 +1,13 @@
 class SlackService
-  attr_reader :connection, :user, :user_id
+  attr_reader :connection, :user
 
-  def initialize(user, user_id=nil)
+  def initialize(user)
     @connection ||= Faraday.new(url: "https://slack.com/api/") do |faraday|
       faraday.request :url_encoded
       faraday.request :multipart
       faraday.adapter Faraday.default_adapter
     end
     @user = user
-    @user_id = user_id
-
   end
 
   def post_image(text="test", title="test-title")
@@ -34,7 +32,7 @@ class SlackService
   end
 
   def user_info
-    parse(connection.get('users.info', user: user_id, token: ENV['SLACK_BOT_TOKEN']))
+    parse(connection.get('users.info', user: user.uid, token: ENV['SLACK_BOT_TOKEN']))
   end
 
   private

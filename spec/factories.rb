@@ -13,6 +13,5 @@ FactoryGirl.define do
   end
 
   factory :user do
-
   end
 end
