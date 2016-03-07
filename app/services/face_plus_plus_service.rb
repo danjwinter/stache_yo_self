@@ -20,6 +20,7 @@ class FacePlusPlusService
       json_response = parse(response.options[:response_body])
       if json_response['face'].empty?
         mustache_request.update(headless: true)
+        mustache_request.face_location = FaceLocation.create
       else
         mustache_request.update(headless: false)
         mustache_request.face_location = FaceLocation.create(mouth_left_x: json_response['face'][0]['position']['mouth_left']['x'],
