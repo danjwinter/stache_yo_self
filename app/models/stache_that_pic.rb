@@ -17,7 +17,7 @@ class StacheThatPic
   end
 
   def self.create_image(mustache_request)
-    pic = mustache_request.image_url
+    pic = mustache_request.user_info.image_url
     magick_pic = Magick::Image.read(pic).first
     sc = StacheCalculation.new(mustache_request.face_location)
     sized_magick_pic = magick_pic.resize_to_fill(400,400)

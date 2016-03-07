@@ -4,7 +4,7 @@ class StachePicsController < ApplicationController
     # binding.pry
     # create StacheRequest base fields from params
     mustache_request = MustacheRequest.create(uid: params[:user_id],
-                                              channel: params[:channel])
+                                              channel: params[:channel_id])
         response = {
       "response_type": "in_channel",
       "text": "So you want a mustache, eh?"

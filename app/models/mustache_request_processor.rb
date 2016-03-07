@@ -16,6 +16,7 @@ class MustacheRequestProcessor
       StacheThatPic.create_image(mustache_request)
       # go stache it
     else
+      # binding.pry
       SlackService.post_stached_image(mustache_request)
       # send stache response
     end
