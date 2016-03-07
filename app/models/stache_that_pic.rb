@@ -18,7 +18,9 @@ class StacheThatPic
 
   def self.create_image(mustache_request)
     pic = mustache_request.user_info.image_url
-    magick_pic = Magick::Image.read(pic).first
+    mustache_request.original_user_image = URI.parse(pic)
+    mustache_request.save
+    magick_pic = Magick::Image.read(mustache_request.original_user_image.url).first
     sc = StacheCalculation.new(mustache_request.face_location)
     sized_magick_pic = magick_pic.resize_to_fill(400,400)
     stache_pic = Magick::Image.read("#{Rails.root}/app/assets/images/stache_1.png").first

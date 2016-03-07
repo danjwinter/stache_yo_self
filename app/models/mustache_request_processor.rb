@@ -4,6 +4,7 @@ class MustacheRequestProcessor
     if !mustache_request.user_info
       SlackService.add_user_info(mustache_request)
     elsif !mustache_request.face_location
+      binding.pry
       FacePlusPlusService.add_face_location(mustache_request)
     elsif mustache_request.headless?
       SlackService.post_headless_response(mustache_request)

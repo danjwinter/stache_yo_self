@@ -10,6 +10,14 @@ class MustacheRequest < ActiveRecord::Base
                             }
   do_not_validate_attachment_file_type :stached_user_image
 
+  has_attached_file :original_user_image,
+                    styles: {
+                              thumb: '100x100',
+                              square: '200x200',
+                              medium: '400x400'
+                            }
+  do_not_validate_attachment_file_type :original_user_image
+
   def has_stached_image?
     stached_user_image.url != "/stached_user_images/original/missing.png"
   end
