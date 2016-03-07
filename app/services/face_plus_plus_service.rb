@@ -27,9 +27,8 @@ class FacePlusPlusService
                                             mouth_right_x: json_response['face'][0]['position']['mouth_right']['x'],
                                             mouth_right_y: json_response['face'][0]['position']['mouth_right']['y'],
                                             nose_y: json_response['face'][0]['position']['nose']['y'])
-                                            # binding.pry
-        MustacheRequestProcessor.process(mustache_request)
       end
+      MustacheRequestProcessor.process(mustache_request)
     end
     request.run
   end
