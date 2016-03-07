@@ -1,3 +1,4 @@
+require 'open-uri'
 class StacheThatPic
 
   def self.add_stache_to(user)
@@ -19,7 +20,14 @@ class StacheThatPic
   def self.create_image(mustache_request)
     pic = mustache_request.user_info.image_url
     # binding.pry
-    mustache_request.original_user_image = File.open "#{Rails.root}/app/assets/images/stache_1.png"
+
+    file = Tempfile.new ['', ".#{pic}"]
+file.binmode # note that our tempfile must be in binary mode
+file.write open(image_url).read
+file.rewind
+file
+
+    mustache_request.original_user_image = file
     mustache_request.save
     magick_pic = Magick::Image.read(mustache_request.original_user_image.url).first
     sc = StacheCalculation.new(mustache_request.face_location)
