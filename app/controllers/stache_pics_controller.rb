@@ -1,8 +1,6 @@
 class StachePicsController < ApplicationController
 
   def create
-    # binding.pry
-    # create StacheRequest base fields from params
     mustache_request = MustacheRequest.create(uid: params[:user_id],
                                               channel: params[:channel_id])
         response = {
@@ -12,9 +10,7 @@ class StachePicsController < ApplicationController
     render json: response
 
     Thread.new {
-      # gather_and_send_stached_photo_response
       MustacheRequestProcessor.process(mustache_request)
-      #
   }
   end
 
