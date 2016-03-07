@@ -18,7 +18,8 @@ class StacheThatPic
 
   def self.create_image(mustache_request)
     pic = mustache_request.user_info.image_url
-    mustache_request.original_user_image = URI.parse(pic)
+    # binding.pry
+    mustache_request.original_user_image = File.open "#{Rails.root}/app/assets/images/stache_1.png"
     mustache_request.save
     magick_pic = Magick::Image.read(mustache_request.original_user_image.url).first
     sc = StacheCalculation.new(mustache_request.face_location)

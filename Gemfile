@@ -19,7 +19,7 @@ gem 'aws-sdk', '~>1.66.0'
 gem 'factory_girl_rails'
 gem 'rmagick'
 gem 'typhoeus'
-gem 'pry', group: :production
+# gem 'pry', group: :production
 
 group :development, :test do
   gem 'byebug'
