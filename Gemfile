@@ -18,6 +18,7 @@ gem 'paperclip'
 gem 'aws-sdk', '~>1.66.0'
 gem 'factory_girl_rails'
 gem 'rmagick'
+gem 'typhoeus'
 
 group :development, :test do
   gem 'byebug'

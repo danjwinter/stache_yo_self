@@ -1,4 +1,12 @@
 FactoryGirl.define do
+  factory :face_location do
+    mustache_request nil
+    mouth_left_x "9.99"
+    mouth_right_x "9.99"
+    mouth_left_y "9.99"
+    mouth_right_y "9.99"
+    nose_y "9.99"
+  end
   factory :slack_pic do
     association :user
     face_id '123'

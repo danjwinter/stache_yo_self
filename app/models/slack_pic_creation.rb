@@ -22,7 +22,6 @@ class SlackPicCreation
       nose_x: slack_data['face'][0]['position']['nose']['x'],
       nose_y: slack_data['face'][0]['position']['nose']['y']
       )
-      binding.pry
     end
   end
 end
