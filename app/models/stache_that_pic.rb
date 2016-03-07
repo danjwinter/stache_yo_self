@@ -44,6 +44,7 @@ class StacheThatPic
     # binding.pry
     puts mustache_request.original_user_image = uri_pic
     puts mustache_request.save
+    puts "after original image save"
     magick_pic = Magick::Image.read(mustache_request.original_user_image.url).first
     sc = StacheCalculation.new(mustache_request.face_location)
     sized_magick_pic = magick_pic.resize_to_fill(400,400)
