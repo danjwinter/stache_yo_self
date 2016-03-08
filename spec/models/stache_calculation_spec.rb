@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe StacheCalculation do
   before do
-    slack_pic = create(:slack_pic)
-    @sc = StacheCalculation.new(slack_pic)
+    mustache_request = create(:mustache_request, face_location: create(:face_location))
+    @sc = StacheCalculation.new(mustache_request)
   end
 
   it "returns correct translation of x axis for stache" do
