@@ -37,7 +37,7 @@ class SlackService
                                      params: {channel: mustache_request.channel,
                                               token: ENV['SLACK_BOT_TOKEN'],
                                               text: "Life's rough being headless.",
-                                              attachments: '[{"title":"One Day The Headless Army Will Rise Again!","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
+                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 
   end
 
