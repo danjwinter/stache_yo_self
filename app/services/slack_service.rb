@@ -11,13 +11,15 @@ class SlackService
   end
 
   def self.add_user_info(mustache_request)
+    # binding.pry
     request = Typhoeus::Request.new("https://slack.com/api/users.info",
                                      params: {user: mustache_request.uid,
-                                              token: ENV['SLACK_BOT_TOKEN']})
+                                              token: mustache_request.slack_team.access_token})
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
-      mustache_request.user_info = UserInfo.create(image_url: json_response['user']['profile']['image_512'],
-                                        user_full_name: json_response['user']['real_name'])
+      # binding.pry
+      mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_original]}" ,
+                                        user_full_name: json_response[:user][:real_name])
       MustacheRequestProcessor.process(mustache_request)
     end
     request.run
@@ -43,14 +45,24 @@ class SlackService
 
   def self.oauth_response(code)
     Typhoeus.post("https://slack.com/api/oauth.access",
-                  params: {client_id: ENV['SLACK_SECRET'],
-                           client_secret: ENV['SLACK_KEY'],
+                  params: {client_id: ENV['SLACK_KEY'],
+                           client_secret: ENV['SLACK_SECRET'],
                            code: code})
+  end
+
+  def self.save_users(slack_team)
+    response = parse(Typhoeus.post("https://slack.com/api/users.list",
+                            params: {token: slack_team.access_token}).options[:response_body])
+
+    response[:members].each do |member_data|
+      slack_team.users << User.find_or_create_by(name: member_data[:name],
+                                                uid: member_data[:id])
+                                    end
   end
 
   private
 
   def self.parse(response)
-    JSON.parse(response, symbolize_name: true)
+    JSON.parse(response, symbolize_names: true)
   end
 end

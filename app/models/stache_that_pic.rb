@@ -35,7 +35,7 @@ class StacheThatPic
   end
 
   def self.stache_calculations(mustache_request)
-    @sc ||= StacheCalculation.new(mustache_request.face_location)
+    StacheCalculation.new(mustache_request.face_location)
   end
 
   def self.resized_original_image_magick(mustache_request)

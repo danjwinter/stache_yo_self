@@ -1,6 +1,7 @@
 class MustacheRequest < ActiveRecord::Base
   has_one :user_info
   has_one :face_location
+  belongs_to :slack_team
 
   has_attached_file :stached_user_image,
                     styles: {

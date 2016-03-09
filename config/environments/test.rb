@@ -1,5 +1,5 @@
 Rails.application.configure do
-  # Paperclip::Attachment.default_options[:path] = "#{Rails.root}/../system/:class/:id_partition/:style.:extension"
+  Paperclip::Attachment.default_options[:path] = "#{Rails.root}/system/:class/:id_partition/:style.:extension"
   # if ENV['PARALLEL_TEST_GROUPS']
   #   Paperclip::Attachment.default_options[:path] = ":rails_root/public/system/:rails_env/#{ENV['TEST_ENV_NUMBER'].to_i}/:class/:attachment/:id_partition/:filename"
   # else
