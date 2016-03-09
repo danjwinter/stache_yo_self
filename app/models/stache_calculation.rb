@@ -1,8 +1,8 @@
 class StacheCalculation
-  attr_reader :slack_pic
+  attr_reader :face_location
 
-  def initialize(slack_pic)
-    @slack_pic = slack_pic
+  def initialize(face_location)
+    @face_location = face_location
   end
 
   def translate_x
@@ -20,16 +20,16 @@ class StacheCalculation
   private
 
   def stache_scale_width
-    (slack_pic.mouth_right_x - slack_pic.mouth_left_x) / 100
+    (face_location.mouth_right_x - face_location.mouth_left_x) / 100
   end
 
   def mouth_ys_and_nose_y_avg
-    mouth_avg = (slack_pic.mouth_left_y + slack_pic.mouth_right_y) / 2
-    mouth_and_nose_y_avg = (mouth_avg + slack_pic.nose_y) / 2
-    (mouth_and_nose_y_avg + slack_pic.nose_y * 2) / 3
+    mouth_avg = (face_location.mouth_left_y + face_location.mouth_right_y) / 2
+    mouth_and_nose_y_avg = (mouth_avg + face_location.nose_y) / 2
+    (mouth_and_nose_y_avg + face_location.nose_y * 2) / 3
   end
 
   def mouth_xs_avg
-    (slack_pic.mouth_left_x * 4 + slack_pic.mouth_right_x * 4) / 2
+    (face_location.mouth_left_x * 4 + face_location.mouth_right_x * 4) / 2
   end
 end

@@ -10,6 +10,7 @@ class StachePicsController < ApplicationController
     render json: response
 
     Thread.new {
+      binding.pry
       MustacheRequestProcessor.process(mustache_request)
   }
   end

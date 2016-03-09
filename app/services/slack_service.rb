@@ -23,13 +23,6 @@ class SlackService
     request.run
   end
 
-  def post_image(text="test", title="test-title")
-    parse(connection.post("chat.postMessage",
-                          channel: user.channel,
-                          text: text,
-                          token: ENV['SLACK_BOT_TOKEN'],
-                          attachments: '[{"title":"'+ title + '","image_url": "' + user.stached_user_image.url + '"}]'))
-  end
 
   def self.post_stached_image(mustache_request)
     Typhoeus.post("https://slack.com/api/chat.postMessage",
@@ -43,7 +36,8 @@ class SlackService
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
                                               token: ENV['SLACK_BOT_TOKEN'],
-                                              text: "Life's rough being headless."})
+                                              text: "Life's rough being headless.",
+                                              attachments: '[{"title":"One Day The Headless Army Will Rise Again!","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 
   end
 

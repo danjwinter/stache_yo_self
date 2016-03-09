@@ -20,9 +20,9 @@ class StacheThatPic
     stache_magick_pic = resized_stache_magick_pic(mustache_request)
     stache_calcs = stache_calculations(mustache_request)
     user_magick_pic.composite(stache_magick_pic,
-                                            stache_calcs.translate_x,
-                                            stache_calcs.translate_y,
-                                            Magick::OverCompositeOp)
+                              stache_calcs.translate_x,
+                              stache_calcs.translate_y,
+                              Magick::OverCompositeOp)
   end
 
   def self.resized_stache_magick_pic(mustache_request)

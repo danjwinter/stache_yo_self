@@ -2,6 +2,14 @@ FactoryGirl.define do
   factory :mustache_request do
     uid "U09UB1KCN"
     channel "C0QL1GXS9"
+
+    factory :mustache_request_with_user_info do
+      association :user_info
+
+      factory :mustache_request_with_user_and_face_data do
+        association :face_location
+      end
+    end
   end
 
   factory :face_location do
@@ -16,11 +24,4 @@ FactoryGirl.define do
     image_url "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
     user_full_name "Gob Bluth"
   end
-
-  factory :mustache_request_with_user_info , class: MustacheRequest do
-    uid "U09UB1KCN"
-    channel "C0QL1GXS9"
-    association :user_info
-  end
-
 end

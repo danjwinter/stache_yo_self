@@ -11,6 +11,12 @@ require 'typhoeus/adapters/faraday'
 # inclue_http_adapter_for("typhoeus")
 # require 'vcr'
 
+class FakeImage
+  def url
+    "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
+  end
+end
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     # Choose a test framework:
