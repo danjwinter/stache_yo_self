@@ -1,8 +1,7 @@
 class StachePicsController < ApplicationController
 
   def create
-    # binding.pry
-    if params[:text].empty?
+    if params[:text].empty? || params[:text].downcase == "me"
     mustache_request = MustacheRequest.create(uid: params[:user_id],
                                               channel: params[:channel_id])
         response = {
@@ -46,7 +45,6 @@ end
   render json: response
 
   Thread.new {
-    # binding.pry
     SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
     MustacheRequestProcessor.process(mustache_request)
 }
