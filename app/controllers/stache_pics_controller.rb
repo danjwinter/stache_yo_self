@@ -1,6 +1,7 @@
 class StachePicsController < ApplicationController
 
   def create
+    binding.pry
     mustache_request = MustacheRequest.create(uid: params[:user_id],
                                               channel: params[:channel_id])
         response = {
@@ -10,7 +11,7 @@ class StachePicsController < ApplicationController
     render json: response
 
     Thread.new {
-      binding.pry
+      # SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
       MustacheRequestProcessor.process(mustache_request)
   }
   end

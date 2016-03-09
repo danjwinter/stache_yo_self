@@ -41,6 +41,13 @@ class SlackService
 
   end
 
+  def self.oauth_response(code)
+    Typhoeus.post("https://slack.com/api/oauth.access",
+                  params: {client_id: ENV['SLACK_SECRET'],
+                           client_secret: ENV['SLACK_KEY'],
+                           code: code})
+  end
+
   private
 
   def self.parse(response)
