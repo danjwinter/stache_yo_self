@@ -1,14 +1,14 @@
 class FacePlusPlusService
-  attr_reader :connection, :user
-
-  def initialize(user)
-    @connection ||= Faraday.new(url: "http://apius.faceplusplus.com/") do |faraday|
-      faraday.request :url_encoded
-      faraday.headers['Content-Type'] = 'application/json'
-      faraday.adapter Faraday.default_adapter
-    end
-    @user = user
-  end
+  # attr_reader :connection, :user
+  #
+  # def initialize(user)
+  #   @connection ||= Faraday.new(url: "http://apius.faceplusplus.com/") do |faraday|
+  #     faraday.request :url_encoded
+  #     faraday.headers['Content-Type'] = 'application/json'
+  #     faraday.adapter Faraday.default_adapter
+  #   end
+  #   @user = user
+  # end
 
   def self.add_face_location(mustache_request)
     request = Typhoeus::Request.new("http://apius.faceplusplus.com/detection/detect",
@@ -34,13 +34,13 @@ class FacePlusPlusService
     request.run
   end
 
-  def detect_face
-    parse(connection.get("detection/detect", mode: "oneface", api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET'], url: user.image_url))
-  end
-
-  def more_details
-    parse(connection.get("detection/landmark", face_id: user.slack_pics.last.face_id, api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET']))
-  end
+  # def detect_face
+  #   parse(connection.get("detection/detect", mode: "oneface", api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET'], url: user.image_url))
+  # end
+  #
+  # def more_details
+  #   parse(connection.get("detection/landmark", face_id: user.slack_pics.last.face_id, api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET']))
+  # end
 
 
   private
@@ -49,11 +49,11 @@ class FacePlusPlusService
     JSON.parse(response, symbolize_name: true)
   end
 
-  def parse(response)
-    JSON.parse(response.body, symbolize_name: true)
-  end
-
-  def include_tokens
-    {api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET']}
-  end
+  # def parse(response)
+  #   JSON.parse(response.body, symbolize_name: true)
+  # end
+  #
+  # def include_tokens
+  #   {api_key: ENV['FACE_KEY'], api_secret: ENV['FACE_SECRET']}
+  # end
 end
