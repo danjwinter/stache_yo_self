@@ -77,6 +77,8 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    ethon (0.8.1)
+      ffi (>= 1.3.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -85,10 +87,12 @@ GEM
       railties (>= 3.0.0)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
+    ffi (1.9.10)
     figaro (1.1.1)
       thor (~> 0.14)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    hashdiff (0.3.0)
     i18n (0.7.0)
     jbuilder (2.4.1)
       activesupport (>= 3.0.0, < 5.1)
@@ -204,6 +208,8 @@ GEM
     tilt (2.0.2)
     turbolinks (2.5.3)
       coffee-rails
+    typhoeus (1.0.1)
+      ethon (>= 0.8.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.7.2)
@@ -215,9 +221,10 @@ GEM
       binding_of_caller (>= 0.7.2)
       railties (>= 4.0)
       sprockets-rails (>= 2.0, < 4.0)
-    webmock (1.8.11)
-      addressable (>= 2.2.7)
-      crack (>= 0.1.7)
+    webmock (1.24.2)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -250,10 +257,11 @@ DEPENDENCIES
   shoulda-matchers
   spring
   turbolinks
+  typhoeus
   uglifier (>= 1.3.0)
   vcr
   web-console (~> 2.0)
-  webmock (~> 1.8.0)
+  webmock
 
 BUNDLED WITH
    1.11.2

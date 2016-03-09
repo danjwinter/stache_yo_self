@@ -1,45 +1,66 @@
 class SlackService
-  attr_reader :connection, :user, :user_id
+  attr_reader :connection, :user
 
-  def initialize(user, user_id=nil)
+  def initialize(user)
     @connection ||= Faraday.new(url: "https://slack.com/api/") do |faraday|
       faraday.request :url_encoded
       faraday.request :multipart
       faraday.adapter Faraday.default_adapter
     end
     @user = user
-    @user_id = user_id
+  end
+
+  def self.add_user_info(mustache_request)
+    request = Typhoeus::Request.new("https://slack.com/api/users.info",
+                                     params: {user: mustache_request.uid,
+                                              token: mustache_request.slack_team.access_token})
+    request.on_complete do |response|
+      json_response = parse(response.options[:response_body])
+      mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_original]}" ,
+                                        user_full_name: json_response[:user][:real_name])
+      MustacheRequestProcessor.process(mustache_request)
+    end
+    request.run
+  end
+
+
+  def self.post_stached_image(mustache_request)
+    Typhoeus.post("https://slack.com/api/chat.postMessage",
+                                     params: {channel: mustache_request.channel,
+                                              token: mustache_request.slack_team.access_token, #ENV['SLACK_BOT_TOKEN'],
+                                              text: "With A Great Stache Comes Great Responsibility.",
+                                              attachments: '[{"title":"' + mustache_request.user_info.user_full_name + ' just got stached!","image_url": "' + mustache_request.stached_user_image.url + '"}]'})
+  end
+
+  def self.post_headless_response(mustache_request)
+    Typhoeus.post("https://slack.com/api/chat.postMessage",
+                                     params: {channel: mustache_request.channel,
+                                              token: mustache_request.slack_team.access_token,
+                                              text: "Life's rough being headless.",
+                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 
   end
 
-  def post_image(text="test", title="test-title")
-    parse(connection.post("chat.postMessage",
-                          channel: user.channel,
-                          text: text,
-                          token: ENV['SLACK_BOT_TOKEN'],
-                          attachments: '[{"title":"'+ title + '","image_url": "' + user.stached_user_image.url + '"}]'))
+  def self.oauth_response(code)
+    Typhoeus.post("https://slack.com/api/oauth.access",
+                  params: {client_id: ENV['SLACK_KEY'],
+                           client_secret: ENV['SLACK_SECRET'],
+                           code: code})
   end
 
-  def post_headless_response(text="test", title="test-title")
-    parse(connection.post("chat.postMessage",
-                          channel: user.channel,
-                          text: "Life's rough being headless. Enjoy this cat giffy to take your mind off it",
-                          token: ENV['SLACK_BOT_TOKEN']))
+  def self.save_users(slack_team)
+    response = parse(Typhoeus.post("https://slack.com/api/users.list",
+                            params: {token: slack_team.access_token}).options[:response_body])
 
-                          parse(connection.post("chat.postMessage",
-                                                channel: user.channel,
-                                                text: "/giphy kitten",
-                                                token: ENV['SLACK_BOT_TOKEN'],
-                          attachments: '[{"title":"'+ title + '","image_url": "' + image_url + '"}]'))
-  end
-
-  def user_info
-    parse(connection.get('users.info', user: user_id, token: ENV['SLACK_BOT_TOKEN']))
+    response[:members].each do |member_data|
+      slack_team.users << User.find_or_create_by(name: member_data[:name],
+                                                uid: member_data[:id])
+                                    end
   end
 
   private
 
-  def parse(response)
-    JSON.parse(response.body, symbolize_name: true)
+  def self.parse(response)
+    JSON.parse(response, symbolize_names: true)
   end
 end

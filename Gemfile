@@ -18,6 +18,8 @@ gem 'paperclip'
 gem 'aws-sdk', '~>1.66.0'
 gem 'factory_girl_rails'
 gem 'rmagick'
+gem 'typhoeus'
+# gem 'pry', group: :production
 
 group :development, :test do
   gem 'byebug'
@@ -32,7 +34,7 @@ end
 
 group :test do
   gem 'vcr'
-  gem 'webmock', '~> 1.8.0'
+  gem 'webmock'
 end
 
 group :development do
