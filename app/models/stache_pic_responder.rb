@@ -4,8 +4,6 @@ class StachePicResponder
     mustache_request = MustacheRequest.create(uid: params[:user_id],
                                               channel: params[:channel_id])
 
-
-
     Thread.new {
       SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
       MustacheRequestProcessor.process(mustache_request)
@@ -29,8 +27,6 @@ class StachePicResponder
       response = friend_not_found_response
     end
 
-
-
       Thread.new {
         SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
         MustacheRequestProcessor.process(mustache_request)
@@ -38,15 +34,14 @@ class StachePicResponder
     response
   end
 
+  private
 
-      private
-
-      def self.stache_for_user_response
-        {
-      "response_type": "in_channel",
-      "text": "So you want a mustache, eh?"
-        }
-      end
+  def self.stache_for_user_response
+    {
+  "response_type": "in_channel",
+  "text": "So you want a mustache, eh?"
+    }
+  end
 
   def self.stache_for_friend_response(user)
     {

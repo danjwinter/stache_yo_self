@@ -9,6 +9,7 @@ What If My Profile Picture Doesn't Have My Face?
 
 In the event that the internet has agreed you are faceless, you will be sent a consolation stache and words of encouragement for it will indeed be a sad day.
 
+![](http://g.recordit.co/xgIwmiiemU.gif)
 
 Installation
 
@@ -33,6 +34,15 @@ Stache-Yo-Self does not reveal or distribute any identifying information to any 
 Problems?
 
 Log an Issue Here! Stache Yo Self is Open Source and maintained by Dan Winter.
+
+Features and Improvements To Be Completed Next
+
+- Face Angle Adjustment for Staches
+- Improved Testing (see below)
+- Benchmark Alternate Servers For Increased Speed
+- Additional Stache Choices
+- Make Any Picture URL Stacheable
+- In-House Facial Detection
 
 Testing
 
