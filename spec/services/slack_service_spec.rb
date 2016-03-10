@@ -5,23 +5,28 @@ RSpec.describe SlackService do
     @mustache_request = create(:mustache_request)
   end
 
-  it "returns correct translation of x axis for stache" do
-    VCR.use_cassette("slack_service#add_user_info") do
-      allow(MustacheRequestProcessor).to receive(:process).and_return(nil)
+  describe ".add_user_info" do
+    it "adds user information to mustache_request" do
+      # VCR.use_cassette("slack_service#add_user_info") do
+      # Commenting out VCR due to compatability issues with Typhoeus
+      # Message Posting to be tested at a later date due to unavailability of test domain
 
-      # Stubbing json response because VCR stubs Typhoeus to return different
-      # has values than when hitting actual API
-      allow(SlackService).to receive(:parse).and_return(stubbed_slack_user_info_json_response)
+        allow(MustacheRequestProcessor).to receive(:process).and_return(nil)
 
-      expect(@mustache_request.user_info).to eq nil
+        # Stubbing json response because VCR stubs Typhoeus to return different
+        # has values than when hitting actual API
+        allow(SlackService).to receive(:parse).and_return(stubbed_slack_user_info_json_response)
 
-      SlackService.add_user_info(@mustache_request)
+        expect(@mustache_request.user_info).to eq nil
 
-      user_info = @mustache_request.user_info
+        SlackService.add_user_info(@mustache_request)
 
-      expect(user_info).to_not eq nil
-      expect(user_info.image_url).to eq "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
-      expect(user_info.user_full_name).to eq "Dan Winter"
+        user_info = @mustache_request.user_info
+
+        expect(user_info).to_not eq nil
+        expect(user_info.image_url).to eq "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
+        expect(user_info.user_full_name).to eq "Dan Winter"
+      # end
     end
   end
 end

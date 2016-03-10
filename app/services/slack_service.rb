@@ -1,14 +1,4 @@
 class SlackService
-  attr_reader :connection, :user
-
-  def initialize(user)
-    @connection ||= Faraday.new(url: "https://slack.com/api/") do |faraday|
-      faraday.request :url_encoded
-      faraday.request :multipart
-      faraday.adapter Faraday.default_adapter
-    end
-    @user = user
-  end
 
   def self.add_user_info(mustache_request)
     request = Typhoeus::Request.new("https://slack.com/api/users.info",
@@ -27,7 +17,7 @@ class SlackService
   def self.post_stached_image(mustache_request)
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
-                                              token: mustache_request.slack_team.access_token, #ENV['SLACK_BOT_TOKEN'],
+                                              token: mustache_request.slack_team.access_token,
                                               text: "With A Great Stache Comes Great Responsibility.",
                                               attachments: '[{"title":"' + mustache_request.user_info.user_full_name + ' just got stached!","image_url": "' + mustache_request.stached_user_image.url + '"}]'})
   end
