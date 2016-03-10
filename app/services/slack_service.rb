@@ -7,7 +7,7 @@ class SlackService
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
       mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_original]}" ,
-                                        user_full_name: json_response[:user][:real_name])
+                                                   user_full_name: json_response[:user][:real_name])
       MustacheRequestProcessor.process(mustache_request)
     end
     request.run
@@ -26,7 +26,7 @@ class SlackService
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
                                               token: mustache_request.slack_team.access_token,
-                                              text: "Life's rough being headless.",
+                                              text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
                                               attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 
   end
@@ -42,9 +42,12 @@ class SlackService
     response = parse(Typhoeus.post("https://slack.com/api/users.list",
                             params: {token: slack_team.access_token}).options[:response_body])
 
+                            # binding.pry
     response[:members].each do |member_data|
-      slack_team.users << User.find_or_create_by(name: member_data[:name],
-                                                uid: member_data[:id])
+      user = User.find_or_create_by(uid: member_data[:id])
+        user.update(screen_name: member_data[:name],
+                    first_name: member_data[:profile][:first_name])
+      slack_team.users << user
                                     end
   end
 

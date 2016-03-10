@@ -16,6 +16,10 @@ class FacePlusPlusService
 
   private
 
+  def save_face_info_and_stache_on(response)
+
+  end
+
   def self.save_face_location_info(mustache_request, json_response)
     if json_response[:face].empty?
       mustache_request.update(headless: true)
