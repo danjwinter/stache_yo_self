@@ -1,7 +1,15 @@
 FactoryGirl.define do
+
+  factory :slack_team do
+    team_id "T029P2S9M"
+    team_name "Turing"
+    access_token ENV['SAMPLE_SLACK_ACCESS_TOKEN']
+  end
+
   factory :mustache_request do
     uid "U09UB1KCN"
     channel "C0QL1GXS9"
+    association :slack_team
 
     factory :mustache_request_with_user_info do
       association :user_info

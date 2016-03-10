@@ -7,9 +7,7 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'typhoeus/adapters/faraday'
-# require 'vcr_cucumber_helpers'
-# inclue_http_adapter_for("typhoeus")
-# require 'vcr'
+
 
 class FakeImage
   def url
@@ -19,12 +17,7 @@ end
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
-    # Choose a test framework:
     with.test_framework :rspec
-
-
-    # Choose one or more libraries:
-    # Or, choose the following (which implies all of the above):
     with.library :rails
   end
 end
@@ -40,63 +33,76 @@ def json_response
 end
 
 def stubbed_face_plus_plus_json_response
-  {"face"=>
-  [{"attribute"=>{"age"=>{"range"=>12, "value"=>32}, "gender"=>{"confidence"=>99.5658, "value"=>"Male"}, "race"=>{"confidence"=>97.4503, "value"=>"White"}, "smiling"=>{"value"=>5.39037}},
-    "face_id"=>"88b8e48125db32de64a88ca6e9b80e13",
-    "position"=>
-     {"center"=>{"x"=>52.734375, "y"=>42.578125},
-      "eye_left"=>{"x"=>45.326563, "y"=>36.760156},
-      "eye_right"=>{"x"=>59.900195, "y"=>36.137305},
-      "height"=>30.078125,
-      "mouth_left"=>{"x"=>47.554297, "y"=>52.6875},
-      "mouth_right"=>{"x"=>59.465039, "y"=>51.795703},
-      "nose"=>{"x"=>53.956445, "y"=>44.94668},
-      "width"=>30.078125},
-    "tag"=>""}],
- "img_height"=>512,
- "img_id"=>"b85869172117fb2bd7944573afff3110",
- "img_width"=>512,
- "session_id"=>"a008559069b84c7da39985dc44c7f59b",
- "url"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"}
+  {:face=>
+  [{:attribute=>{:age=>{:range=>12, :value=>32}, :gender=>{:confidence=>99.5658, :value=>"Male"}, :race=>{:confidence=>97.4503, :value=>"White"}, :smiling=>{:value=>5.39037}},
+    :face_id=>"88b8e48125db32de64a88ca6e9b80e13",
+    :position=>
+     {:center=>{:x=>52.734375, :y=>42.578125},
+      :eye_left=>{:x=>45.326563, :y=>36.760156},
+      :eye_right=>{:x=>59.900195, :y=>36.137305},
+      :height=>30.078125,
+      :mouth_left=>{:x=>47.554297, :y=>52.6875},
+      :mouth_right=>{:x=>59.465039, :y=>51.795703},
+      :nose=>{:x=>53.956445, :y=>44.94668},
+      :width=>30.078125},
+    :tag=>""}]}
+end
+
+def stubbed_slack_omniauth_response
+  {:ok=>true,
+ :access_token=> ENV['SAMPLE_SLACK_ACCESS_TOKEN'],
+ :scope=>
+  "identify,commands,channels:read,team:read,users:read,chat:write:user,chat:write:bot,bot",
+ :team_name=>"Turing",
+ :team_id=>"T029P2S9M"}
 end
 
 def stubbed_slack_user_info_json_response
-  {"ok"=>true,
- "user"=>
-  {"id"=>"U09UB1KCN",
-   "team_id"=>"T029P2S9M",
-   "name"=>"dan.winter",
-   "deleted"=>false,
-   "status"=>nil,
-   "color"=>"5a4592",
-   "real_name"=>"Dan Winter",
-   "tz"=>"America/Indiana/Indianapolis",
-   "tz_label"=>"Eastern Standard Time",
-   "tz_offset"=>-18000,
-   "profile"=>
-    {"first_name"=>"Dan",
-     "last_name"=>"Winter",
-     "image_24"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_24.jpg",
-     "image_32"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_32.jpg",
-     "image_48"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_48.jpg",
-     "image_72"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_72.jpg",
-     "image_192"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_192.jpg",
-     "image_512"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg",
-     "image_1024"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg",
-     "image_original"=>"https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_original.jpg",
-     "avatar_hash"=>"8e0c5fc47896",
-     "title"=>"",
-     "phone"=>"",
-     "skype"=>"",
-     "real_name"=>"Dan Winter",
-     "real_name_normalized"=>"Dan Winter",
-     "email"=>"dan.j.winter@gmail.com"},
-   "is_admin"=>false,
-   "is_owner"=>false,
-   "is_primary_owner"=>false,
-   "is_restricted"=>false,
-   "is_ultra_restricted"=>false,
-   "is_bot"=>false}}
+  {:ok=>true,
+ :user=>
+  {:id=>"U09UB1KCN",
+   :team_id=>"T029P2S9M",
+   :name=>"dan.winter",
+   :deleted=>false,
+   :status=>nil,
+   :color=>"5a4592",
+   :real_name=>"Dan Winter",
+   :tz=>"America/Indiana/Indianapolis",
+   :tz_label=>"Eastern Standard Time",
+   :tz_offset=>-18000,
+   :profile=>
+    {:first_name=>"Dan",
+     :last_name=>"Winter",
+     :image_24=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_24.jpg",
+     :image_32=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_32.jpg",
+     :image_48=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_48.jpg",
+     :image_72=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_72.jpg",
+     :image_192=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_192.jpg",
+     :image_512=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg",
+     :image_1024=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_1024.jpg",
+     :image_original=>
+      "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_original.jpg",
+     :avatar_hash=>"8e0c5fc47896",
+     :title=>"",
+     :phone=>"",
+     :skype=>"",
+     :real_name=>"Dan Winter",
+     :real_name_normalized=>"Dan Winter",
+     :email=>"dan.j.winter@gmail.com"},
+   :is_admin=>false,
+   :is_owner=>false,
+   :is_primary_owner=>false,
+   :is_restricted=>false,
+   :is_ultra_restricted=>false,
+   :is_bot=>false,
+   :has_2fa=>false}}
 end
 #
 # def stubbed_face_plus_plus_body

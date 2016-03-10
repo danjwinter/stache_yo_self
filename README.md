@@ -16,9 +16,9 @@ That's it!
 
 Whenever you need a little stache in your Slack Life, simply type '/stache_me' in any channel to have Stache-Yo-Self slap a mustache on your profile picture and send it back in all its mustachey glory. ****Mustache size varies based on smile size.
 
-```html
-<a href="https://slack.com/oauth/authorize?scope=commands,bot&client_id=2329094327.23820365107"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
-```
+
+<a href="https://slack.com/oauth/authorize?scope=commands&client_id=2329094327.23820365107"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+
 
 New Users and Name Changes
 
