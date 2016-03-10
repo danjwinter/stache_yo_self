@@ -1,6 +1,7 @@
 class StachePicsController < ApplicationController
 
   def create
+    
     if params[:text].empty? || params[:text].downcase == "me"
     mustache_request = MustacheRequest.create(uid: params[:user_id],
                                               channel: params[:channel_id])
