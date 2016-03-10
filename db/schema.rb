@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160309231315) do
+ActiveRecord::Schema.define(version: 20160310031303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,8 +62,9 @@ ActiveRecord::Schema.define(version: 20160309231315) do
 
   create_table "users", force: :cascade do |t|
     t.integer "slack_team_id"
-    t.string  "name"
     t.string  "uid"
+    t.string  "screen_name"
+    t.string  "first_name"
   end
 
   add_index "users", ["slack_team_id"], name: "index_users_on_slack_team_id", using: :btree

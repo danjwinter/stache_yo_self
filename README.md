@@ -2,6 +2,8 @@ An App To Stache Yo Self On Slack
 
 Stache-Yo-Self is a Slack App with slash command and bot integration allowing users to type '/stache_me' in any slack channel and receive a custom mustache'd profile picture of themselves back within seconds. Stache-Yo-Self leverages facial detection API Face Plus Plus to locate the perfect stache position and size to return a truly memorable experience, perfect to liven up any corporate meeting. Installation is easy!
 
+![](http://g.recordit.co/aQ1PazBTf3.gif)
+
 
 What If My Profile Picture Doesn't Have My Face?
 
@@ -14,10 +16,10 @@ Click the button below, log in to your Slack account and accept.
 
 That's it!
 
+<a href="https://slack.com/oauth/authorize?scope=commands&client_id=2329094327.23820365107"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+
 Whenever you need a little stache in your Slack Life, simply type '/stache_me' in any channel to have Stache-Yo-Self slap a mustache on your profile picture and send it back in all its mustachey glory. ****Mustache size varies based on smile size.
 
-
-<a href="https://slack.com/oauth/authorize?scope=commands&client_id=2329094327.23820365107"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
 
 New Users and Name Changes
