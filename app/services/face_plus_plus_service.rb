@@ -8,7 +8,6 @@ class FacePlusPlusService
                                               url: mustache_request.user_info.image_url})
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
-      binding.pry
       save_face_location_info(mustache_request, json_response)
       MustacheRequestProcessor.process(mustache_request)
     end
@@ -22,7 +21,6 @@ class FacePlusPlusService
   end
 
   def self.save_face_location_info(mustache_request, json_response)
-    binding.pry
     if json_response[:face].empty?
       mustache_request.update(headless: true)
       mustache_request.face_location = FaceLocation.create
