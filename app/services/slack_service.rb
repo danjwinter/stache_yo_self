@@ -6,7 +6,8 @@ class SlackService
                                               token: mustache_request.slack_team.access_token})
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
-      mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_original]}" ,
+      binding.pry
+      mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_192] || json_response[:user][:profile][:image_original]}" ,
                                                    user_full_name: json_response[:user][:real_name])
       MustacheRequestProcessor.process(mustache_request)
     end
@@ -42,7 +43,6 @@ class SlackService
     response = parse(Typhoeus.post("https://slack.com/api/users.list",
                             params: {token: slack_team.access_token}).options[:response_body])
 
-                            # binding.pry
     response[:members].each do |member_data|
       user = User.find_or_create_by(uid: member_data[:id])
         user.update(screen_name: member_data[:name],
