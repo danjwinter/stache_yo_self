@@ -17,7 +17,7 @@ class SlackService
   def self.post_stached_image(mustache_request)
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
-                                              token: mustache_request.slack_team.access_token,
+                                              token: mustache_request.slack_team.bot_access_token,
                                               text: "With A Great Stache Comes Great Responsibility.",
                                               attachments: '[{"title":"' + mustache_request.user_info.user_full_name + ' just got stached!","image_url": "' + mustache_request.stached_user_image.url + '"}]'})
   end
@@ -25,7 +25,7 @@ class SlackService
   def self.post_headless_response(mustache_request)
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
-                                              token: mustache_request.slack_team.access_token,
+                                              token: mustache_request.slack_team.bot_access_token,
                                               text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
                                               attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 

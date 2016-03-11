@@ -1,6 +1,7 @@
 class SlackAppsController < ApplicationController
 
   def create
+
     code = params[:code]
 
     SlackTeam.configure(code)

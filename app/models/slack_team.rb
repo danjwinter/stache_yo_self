@@ -4,9 +4,13 @@ class SlackTeam < ActiveRecord::Base
 
   def self.configure(code)
     response = parse(SlackService.oauth_response(code).options[:response_body])
-    slack_team = find_or_create_by(team_id: response[:team_id],
-                                   team_name: response[:team_name],
-                                   access_token: response[:access_token])
+    slack_team = find_or_create_by(team_id: response[:team_id])
+
+    slack_team.update(team_name: response[:team_name],
+                      access_token: response[:access_token],
+                      bot_user_id: response[:bot][:bot_user_id],
+                      bot_access_token: response[:bot][:bot_access_token])
+
 
     SlackService.save_users(slack_team)
   end
