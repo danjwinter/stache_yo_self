@@ -6,7 +6,6 @@ class SlackService
                                               token: mustache_request.slack_team.access_token})
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
-      binding.pry
       mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_192] || json_response[:user][:profile][:image_original]}" ,
                                                    user_full_name: json_response[:user][:real_name])
       MustacheRequestProcessor.process(mustache_request)
