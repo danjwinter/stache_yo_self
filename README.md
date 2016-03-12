@@ -22,6 +22,10 @@ That's it!
 Whenever you need a little stache in your Slack Life, simply type `/stache me` or `/stache @other_user` in any channel to have Stache-Yo-Self slap a mustache on your profile picture and send it back in all its mustachey glory. ****Mustache size varies based on smile size.
 
 
+### Private Channels
+
+Stache Yo Self, the bot, needs to be invited in to public channels in order for you to receive a stache.
+
 ### New Users and Name Changes
 
 If you are a new user or change your screen name on Slack, you will need to wait a day before others can stache you. Let's call it an adjustment period. You can still Stache Yo Self with reckless abandon.
