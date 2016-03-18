@@ -1,8 +1,7 @@
 # An App To Stache Yo Self On Slack
 
 Stache-Yo-Self is a Slack App with slash command and bot integration allowing users to type `/stache me` or `/stache @other_user` in any slack channel and receive a custom mustache'd profile picture of themselves back within seconds. Stache-Yo-Self leverages facial detection API Face Plus Plus to locate the perfect stache position and size to return a truly memorable experience, perfect to liven up any corporate meeting. Installation is easy!
-
-![](http://g.recordit.co/VJNVtjb5zG.gif)
+g)
 
 
 ## What If My Profile Picture Doesn't Have My Face?
@@ -24,7 +23,7 @@ Whenever you need a little stache in your Slack Life, simply type `/stache me` o
 
 ### Private Channels
 
-Stache Yo Self, the bot, needs to be invited in to public channels in order for you to receive a stache.
+Stache Yo Self, the bot, needs to be invited in to private channels in order for you to receive a stache.
 
 ### New Users and Name Changes
 
