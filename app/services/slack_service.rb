@@ -50,6 +50,15 @@ class SlackService
                                     end
   end
 
+  def self.post_large_image_response(mustache_request)
+    Typhoeus.post("https://slack.com/api/chat.postMessage",
+                                     params: {channel: mustache_request.channel,
+                                              token: mustache_request.slack_team.bot_access_token,
+                                              text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
+                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
+
+  end
+
   private
 
   def self.parse(response)

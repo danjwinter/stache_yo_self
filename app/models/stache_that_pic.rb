@@ -6,6 +6,12 @@ class StacheThatPic
     MustacheRequestProcessor.process(mustache_request)
   end
 
+  def self.grab_image_from_url_and_save_to_user(mustache_request)
+    pic = URI.parse(mustache_request.user_info.image_url)
+    mustache_request.original_user_image = pic
+    mustache_request.save
+  end
+  
   private
 
   def self.create_and_save_stached_pic_to_user(mustache_request)
@@ -46,9 +52,4 @@ class StacheThatPic
     Magick::Image.read(mustache_request.original_user_image.url).first
   end
 
-  def self.grab_image_from_url_and_save_to_user(mustache_request)
-    pic = URI.parse(mustache_request.user_info.image_url)
-    mustache_request.original_user_image = pic
-    mustache_request.save
-  end
 end
