@@ -12,6 +12,19 @@ class StachePicResponder
   stache_for_user_response
   end
 
+  def self.send_that_website_a_stache(params)
+    mustache_request = MustacheRequest.create(channel: params[:channel_id])
+    # byebug
+    mustache_request.user_info = UserInfo.create(image_url: params[:text],
+                                                 user_full_name: "Somebody")
+
+                                      Thread.new {
+                                        SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
+                                        MustacheRequestProcessor.process(mustache_request)
+                                    }
+    stache_for_website_response
+  end
+
 
 
   def self.send_their_friend_a_stache(params)
@@ -35,6 +48,13 @@ class StachePicResponder
   end
 
   private
+
+  def self.stache_for_website_response
+    {
+  "response_type": "in_channel",
+  "text": "So you want to mustache that website, eh?"
+    }
+  end
 
   def self.stache_for_user_response
     {
