@@ -1,14 +1,6 @@
 # An App To Stache Yo Self On Slack
 
 Stache-Yo-Self is a Slack App with slash command and bot integration allowing users to type `/stache me` or `/stache @other_user` in any slack channel and receive a custom mustache'd profile picture of themselves back within seconds. Stache-Yo-Self leverages facial detection API Face Plus Plus to locate the perfect stache position and size to return a truly memorable experience, perfect to liven up any corporate meeting. Installation is easy!
-g)
-
-
-## What If My Profile Picture Doesn't Have My Face?
-
-In the event that the internet has agreed you are faceless, you will be sent a consolation stache and words of encouragement for it will indeed be a sad day.
-
-![](http://g.recordit.co/xgIwmiiemU.gif)
 
 ## Installation
 
@@ -19,6 +11,13 @@ That's it!
 <a href="https://slack.com/oauth/authorize?scope=commands,bot&client_id=2329094327.23820365107"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
 
 Whenever you need a little stache in your Slack Life, simply type `/stache me` or `/stache @other_user` in any channel to have Stache-Yo-Self slap a mustache on your profile picture and send it back in all its mustachey glory. ****Mustache size varies based on smile size.
+
+
+## What If My Profile Picture Doesn't Have My Face?
+
+In the event that the internet has agreed you are faceless, you will be sent a consolation stache and words of encouragement for it will indeed be a sad day.
+
+![](http://g.recordit.co/xgIwmiiemU.gif)
 
 
 ### Private Channels
@@ -39,8 +38,9 @@ Log an Issue Here! Stache Yo Self is Open Source and maintained by Dan Winter.
 
 ### Features and Improvements To Be Completed Next
 
-- Face Angle Adjustment for Staches
 - Improved Testing (see below)
+- Stache any URL
+- Face Angle Adjustment for Staches
 - Benchmark Alternate Servers For Increased Speed
 - Additional Stache Choices
 - Make Any Picture URL Stacheable
@@ -48,13 +48,15 @@ Log an Issue Here! Stache Yo Self is Open Source and maintained by Dan Winter.
 
 #### Testing
 
-After hours of scouring The Docs, StackOverflow and pestering everyone who would listen to me at Turing School of Software and Design, this is where we're at. When I look at the tests, I have a strong visceral reaction to it not being fully tested. What I'm trying to say is, I need your help. The lack of tests aren't for lack of trying, I simply don't know how to mock, stub or otherwise get these tests running without hitting outside services.
+After hours of scouring The Docs, StackOverflow and pestering everyone who would listen to me at Turing School of Software and Design, this is where we're at. When I look at the tests, I have a strong visceral reaction to it not being fully tested. With the time constraints placed on this school project, I opted for increased scalability with non-blocking IO API calls over fully testing external services. Like all things in programming, it was a trade off at the time but it allowed me to launch current functionality by my deadline and enable the app to handle being put on the open market for any company to use with their Slack team. I'm not convinced it was the correct choice and I intend to implement whatever is necessary to get it tested properly.
 
 Contributors Welcome! Fork it, Branch it, PR it!
 
 ##### Testing Services
 
-Using Typhoeus allows Stache Yo Self to use callbacks for longer API calls like facial detection and free up threads to handle other requests. When using VCR to test, it returns a Typhoeus object that has the body saved in JSON as key called body but in production, this is called response_body. Through many Stack Overflow posts and conversations, configuring VCR in rails_helper with hook_into :typhoeus or hook_into :webmock should work but have not been successful.
+Using Typhoeus allows Stache Yo Self to use non-blocking IO callbacks for longer API calls like facial detection and free up threads to handle other requests. When using VCR to test, it returns a Typhoeus object that has the body saved in JSON as a key called 'body' but in production, this is called 'response_body'. Through many Stack Overflow posts and conversations, configuring VCR in rails_helper with hook_into :typhoeus or hook_into :webmock should work but have not been successful.
+
+Due to the time constraints placed on this project (it was a school assignment), I opted for increased scalability (non-blocking IO API calls) with current functionality over better testing (using Faraday and VCR) and slower response times. As time permits, the plan is to explore creating a fake to respond to these calls OR to fork the VCR gem and create a custom version that returns the correct keys on the typhoeus object. Again, pull requests welcome!
 
 ##### Testing Image Manipulation
 
