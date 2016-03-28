@@ -42,7 +42,7 @@ class StachePicResponder
   def self.mustache_request(params, uid=nil)
     uid ||= params[:user_id]
     request = MustacheRequest.create(uid: uid,
-                           channel: params[:channel_id])
+                                     channel: params[:channel_id])
     SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << request
     request
   end
