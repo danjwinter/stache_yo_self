@@ -13,8 +13,8 @@ class StachePicResponder
   end
 
   def self.send_that_website_a_stache(params)
-    mustache_request = MustacheRequest.create(channel: params[:channel_id])
-    # byebug
+    mustache_request = MustacheRequest.create(channel: params[:channel_id],
+                                              website_request: true)
     mustache_request.user_info = UserInfo.create(image_url: params[:text],
                                                  user_full_name: "Somebody")
 

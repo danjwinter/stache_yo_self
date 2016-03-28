@@ -23,11 +23,16 @@ class SlackService
   end
 
   def self.post_headless_response(mustache_request)
-    Typhoeus.post("https://slack.com/api/chat.postMessage",
-                                     params: {channel: mustache_request.channel,
-                                              token: mustache_request.slack_team.bot_access_token,
-                                              text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
-                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
+    if mustache_request.website_request
+      send_headless_website_response(mustache_request)
+    else
+      send_headless_user_response(mustache_request)
+    end
+    # Typhoeus.post("https://slack.com/api/chat.postMessage",
+    #                                  params: {channel: mustache_request.channel,
+    #                                           token: mustache_request.slack_team.bot_access_token,
+    #                                           text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
+    #                                           attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
 
   end
 
@@ -47,10 +52,37 @@ class SlackService
         user.update(screen_name: member_data[:name],
                     first_name: member_data[:profile][:first_name])
       slack_team.users << user
-                                    end
+    end
+  end
+
+  def self.post_large_image_response(mustache_request)
+    Typhoeus.post("https://slack.com/api/chat.postMessage",
+                                     params: {channel: mustache_request.channel,
+                                              token: mustache_request.slack_team.bot_access_token,
+                                              text: "Life's rough being headless, #{mustache_request.user_info.user_full_name.split[0]}.",
+                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
+
   end
 
   private
+
+  def self.send_headless_user_response(mustache_request)
+    target = mustache_request.user_info.user_full_name.split[0]
+    headless_response(target, mustache_request)
+  end
+
+  def self.send_headless_website_response(mustache_request)
+    target = 'especially for a website'
+    headless_response(target, mustache_request)
+  end
+
+  def self.headless_response(target, mustache_request)
+    Typhoeus.post("https://slack.com/api/chat.postMessage",
+                                     params: {channel: mustache_request.channel,
+                                              token: mustache_request.slack_team.bot_access_token,
+                                              text: "Life's rough being headless, #{target}.",
+                                              attachments: '[{"title":"But, with time, even the headless can know the joys of a Stache.","image_url": "http://i.imgur.com/9GhYZ9J.png"}]'})
+  end
 
   def self.parse(response)
     JSON.parse(response, symbolize_names: true)
