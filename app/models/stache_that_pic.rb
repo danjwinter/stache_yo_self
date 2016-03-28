@@ -1,17 +1,19 @@
 class StacheThatPic
 
   def self.create_image(mustache_request)
-    grab_image_from_url_and_save_to_user(mustache_request)
+    # save_original_image(mustache_request)
     create_and_save_stached_pic_to_user(mustache_request)
     MustacheRequestProcessor.process(mustache_request)
   end
 
-  def self.grab_image_from_url_and_save_to_user(mustache_request)
+  def self.save_original_image(mustache_request)
     pic = URI.parse(mustache_request.user_info.image_url)
     mustache_request.original_user_image = pic
     mustache_request.save
+    # byebug
+    MustacheRequestProcessor.process(mustache_request)
   end
-  
+
   private
 
   def self.create_and_save_stached_pic_to_user(mustache_request)

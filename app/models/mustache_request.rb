@@ -22,4 +22,8 @@ class MustacheRequest < ActiveRecord::Base
   def has_stached_image?
     stached_user_image.url != "/stached_user_images/original/missing.png"
   end
+
+  def has_no_original_image?
+    original_user_image.url == "/original_user_images/original/missing.png"
+  end
 end
