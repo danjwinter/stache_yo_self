@@ -1,27 +1,21 @@
 class StachePicResponder
 
   def self.send_that_user_a_stache(params)
-    mustache_request = MustacheRequest.create(uid: params[:user_id],
-                                              channel: params[:channel_id])
+    request = mustache_request(params)
 
-    Thread.new {
-      SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
-      MustacheRequestProcessor.process(mustache_request)
-  }
+    start_mustacheing(request)
 
-  stache_for_user_response
+    stache_for_user_response
   end
 
   def self.send_that_website_a_stache(params)
-    mustache_request = MustacheRequest.create(channel: params[:channel_id],
-                                              website_request: true)
-    mustache_request.user_info = UserInfo.create(image_url: params[:text],
-                                                 user_full_name: "Somebody")
+    request = mustache_request(params)
+    request.update(website_request: true)
+    request.user_info = UserInfo.create(image_url: params[:text],
+                                        user_full_name: "Somebody")
 
-                                      Thread.new {
-                                        SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
-                                        MustacheRequestProcessor.process(mustache_request)
-                                    }
+    start_mustacheing(request)
+
     stache_for_website_response
   end
 
@@ -31,23 +25,33 @@ class StachePicResponder
     screen_name = params[:text][1..-1]
     user = User.find_by(screen_name: screen_name)
     if user
-      mustache_request = MustacheRequest.create(uid: user.uid,
-                                                channel: params[:channel_id])
+      request = mustache_request(params, user.uid)
       response = stache_for_friend_response(user)
     else
-      mustache_request = MustacheRequest.create(uid: params[:user_id],
-                                                channel: params[:channel_id])
+      request = mustache_request(params)
       response = friend_not_found_response
     end
 
-      Thread.new {
-        SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << mustache_request
-        MustacheRequestProcessor.process(mustache_request)
-    }
+    start_mustacheing(request)
+
     response
   end
 
   private
+
+  def self.mustache_request(params, uid=nil)
+    uid ||= params[:user_id]
+    request = MustacheRequest.create(uid: uid,
+                           channel: params[:channel_id])
+    SlackTeam.find_by(team_id: params[:team_id]).mustache_requests << request
+    request
+  end
+
+  def self.start_mustacheing(mustache_request)
+    Thread.new {
+      MustacheRequestProcessor.process(mustache_request)
+  }
+  end
 
   def self.stache_for_website_response
     {
