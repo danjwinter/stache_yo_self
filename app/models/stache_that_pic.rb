@@ -6,10 +6,6 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
-    # pic = URI.parse(mustache_request.user_info.image_url)
-    # mustache_request.original_user_image = pic
-    # mustache_request.save
-    # resized = resized_original_image_magick(mustache_request)
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     mustache_request.original_user_image = processed
     mustache_request.save
@@ -27,7 +23,6 @@ class StacheThatPic
 
   def self.stached_user_magick_pic(mustache_request)
     user_magick_pic = original_image_magick_pic(mustache_request)
-    # user_magick_pic = resized_original_image_magick(mustache_request)
     stache_magick_pic = resized_stache_magick_pic(mustache_request)
     stache_calcs = stache_calculations(mustache_request)
     user_magick_pic.composite(stache_magick_pic,
