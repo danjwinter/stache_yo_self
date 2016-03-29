@@ -1,16 +1,14 @@
 class StacheThatPic
 
   def self.create_image(mustache_request)
-    # save_original_image(mustache_request)
     create_and_save_stached_pic_to_user(mustache_request)
     MustacheRequestProcessor.process(mustache_request)
   end
 
   def self.save_original_image(mustache_request)
-    pic = URI.parse(mustache_request.user_info.image_url)
-    mustache_request.original_user_image = pic
+    processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
+    mustache_request.original_user_image = processed
     mustache_request.save
-    # byebug
     MustacheRequestProcessor.process(mustache_request)
   end
 
@@ -24,7 +22,7 @@ class StacheThatPic
   end
 
   def self.stached_user_magick_pic(mustache_request)
-    user_magick_pic = resized_original_image_magick(mustache_request)
+    user_magick_pic = original_image_magick_pic(mustache_request)
     stache_magick_pic = resized_stache_magick_pic(mustache_request)
     stache_calcs = stache_calculations(mustache_request)
     user_magick_pic.composite(stache_magick_pic,
@@ -46,6 +44,10 @@ class StacheThatPic
     StacheCalculation.new(mustache_request.face_location)
   end
 
+  def self.resized(url)
+    Magick::Image.read(url).first.resize_to_fill(400,400)
+  end
+
   def self.resized_original_image_magick(mustache_request)
     original_image_magick_pic(mustache_request).resize_to_fill(400,400)
   end
@@ -53,5 +55,4 @@ class StacheThatPic
   def self.original_image_magick_pic(mustache_request)
     Magick::Image.read(mustache_request.original_user_image.url).first
   end
-
 end
