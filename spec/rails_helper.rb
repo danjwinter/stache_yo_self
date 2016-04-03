@@ -7,9 +7,22 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'typhoeus/adapters/faraday'
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: false)
+
 
 
 class FakeImage
+
+  def flush_errors
+  end
+
+  def dirty?
+  end
+
+  def save
+  end
+
   def url
     "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
   end
@@ -24,7 +37,7 @@ end
 
 VCR.configure do |c|
   c.cassette_library_dir = "spec/vcr"
-  c.hook_into :webmock, :typhoeus
+  c.hook_into :typhoeus
   c.allow_http_connections_when_no_cassette = true
 end
 

@@ -8,8 +8,8 @@ class FacePlusPlusService
                                               url: mustache_request.original_user_image.url})
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
-        save_face_location_info(mustache_request, json_response)
-        MustacheRequestProcessor.process(mustache_request)
+      save_face_location_info(mustache_request, json_response)
+      MustacheRequestProcessor.process(mustache_request)
     end
     request.run
   end

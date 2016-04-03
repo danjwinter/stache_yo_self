@@ -33,7 +33,7 @@ group :development, :test do
 end
 
 group :test do
-  gem 'vcr'
+  gem 'vcr', :git => "https://github.com/danjwinter/vcr"
   gem 'webmock'
 end
 
