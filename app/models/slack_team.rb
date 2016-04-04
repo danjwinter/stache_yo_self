@@ -3,7 +3,7 @@ class SlackTeam < ActiveRecord::Base
   has_many :mustache_requests
 
   def self.configure(code)
-    response = parse(SlackService.oauth_response(code).options[:response_body])
+    response = response(code)
     slack_team = find_or_create_by(team_id: response[:team_id])
 
     slack_team.update(team_name: response[:team_name],
@@ -16,6 +16,10 @@ class SlackTeam < ActiveRecord::Base
   end
 
   private
+
+  def self.response(code)
+    parse(SlackService.oauth_response(code).options[:response_body])
+  end
 
   def self.parse(response)
     JSON.parse(response, symbolize_names: true)

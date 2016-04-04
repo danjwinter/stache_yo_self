@@ -28,6 +28,32 @@ class FakeImage
   end
 end
 
+
+def stubbed_slack_user_list
+  {
+    members:
+[    { id: 1,
+      name: "Frank Reynolds",
+      profile: {
+        first_name: "Frank"
+      }
+    }]
+  }
+end
+
+
+def stubbed_oauth_response
+  {
+    team_id: 1,
+    team_name: "Turing",
+    access_token: 4,
+    bot: {
+      bot_user_id: 34,
+      bot_access_token: 44,
+    }
+  }
+end
+
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
     with.test_framework :rspec
@@ -183,6 +209,10 @@ RSpec.configure do |config|
    config.after(:each) do
      DatabaseCleaner.clean
    end
+
+   config.before(:each) do
+    allow_any_instance_of(Paperclip::Attachment).to receive(:save).and_return(true)
+  end
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 

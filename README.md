@@ -39,30 +39,24 @@ Log an Issue Here! Stache Yo Self is Open Source and maintained by Dan Winter.
 ### Features and Improvements To Be Completed Next
 
 - Improved Testing (see below)
-- Stache any URL
 - Face Angle Adjustment for Staches
 - Benchmark Alternate Servers For Increased Speed
 - Additional Stache Choices
-- Make Any Picture URL Stacheable
+- Optional Color-Of-Stache Argument
 - In-House Facial Detection
 
 #### Testing
 
-After hours of scouring The Docs, StackOverflow and pestering everyone who would listen to me at Turing School of Software and Design, this is where we're at. When I look at the tests, I have a strong visceral reaction to it not being fully tested. With the time constraints placed on this school project, I opted for increased scalability with non-blocking IO API calls over fully testing external services. Like all things in programming, it was a trade off at the time but it allowed me to launch current functionality by my deadline and enable the app to handle being put on the open market for any company to use with their Slack team.
+When I first wrote this app, it was for a school project at Turing School of Software and Design. At the time, I ran into several issues that inhibited testing. While I love TDD, many facets of this app were spiked due to time constraints and it being my first Slack App, unsure how all the pieces worked together. I wrote tests for the pieces I knew how but there were unacceptable gaps. I haven't been satisfied with the level of testing so I've been slowly working away at it when I can find the time.
 
-I'm not convinced it was the correct choice. I was recently asked to extend stacheing services to image urls. As an experiment, I decided to accomplish this before covering my test gaps to see the impact of a partial test suite on future feature development. I was able to add image url stacheing capabilities and test manually due to the limited user interface and my familiarity with the code. In the future, I can definitely see the negative implications of the partial test suite in my confidence that refactoring didn't break anything. With a small project, I could get away with it but on a larger project or when returning to a project I hadn't just worked on, it could spell disaster. I intend to implement whatever is necessary to get it tested properly.
+I had implemented multiple threads during the mustache request response process that let Stache Yo Self send an immediate response to the requester and kick off the stacheing process. Testing multiple threads can be tricky and in restrospect, it may have been a better idea to have sent out another request to a custom API endpoint which launched the stacheing process but the more you program, the more you know. I also had some trouble appropriately stubbing, mocking and testing image manipulation with ImageMagick and how it was interacting with Paperclip and AWS. Since then, I've refactored my code to isolate methods better and make testing the multiple threads easier. I've also upped my mocking and stubbing game to avoid unnecessary API calls when unit testing.
+
+Since using multi-threading runs the risk of tying up your threads for longer processes, I utilized the Typhoeus gem for non-blocking IO API calls. This gave me better confidence that my app wouldn't come to a grinding halt but it broke my tests. I had been using VCR to test my Faraday API calls. Unfortunately, even with the :typhoeus configuration hook in the VCR gem, it returns a Typhoeus object that responds to :response instead of :response_body like it does in production. Time constraints for the project meant I had to choose between the risk of tying up all my threads and having a full testing suite. At the time I opted for a smoothly running application but I wasn't satisfied. Recently, I forked the VCR gem, read through the source code and have successfully implemented a fix to return a Typhoeus object that behaves the same in testing as it does in production.
+
+As I have time, I am building the testing suite back up to what my TDD-loving self finds acceptable.
+
 
 Contributors Welcome! Fork it, Branch it, PR it!
-
-##### Testing Services
-
-Using Typhoeus allows Stache Yo Self to use non-blocking IO callbacks for longer API calls like facial detection and free up threads to handle other requests. When using VCR to test, it returns a Typhoeus object that has the body saved in JSON as a key called 'body' but in production, this is called 'response_body'. Through many Stack Overflow posts and conversations, configuring VCR in rails_helper with hook_into :typhoeus or hook_into :webmock should work but have not been successful.
-
-Due to the time constraints placed on this project (it was a school assignment), I opted for increased scalability (non-blocking IO API calls) with current functionality over better testing (using Faraday and VCR) and slower response times. As time permits, the plan is to explore creating a fake to respond to these calls OR to fork the VCR gem and create a custom version that returns the correct keys on the typhoeus object. Again, pull requests welcome!
-
-##### Testing Image Manipulation
-
-Stache Yo Self leverages ImageMagick, Paperclip and AWS S3 to work with images. When saving a URI.parse(image_url) into Paperclip for use with AWS S3 in a testing development, I am able to manipulate where a file is saved with the default configuration options for paperclip but the URL that is returned on image.url contains a leading slash which makes me unable to find the image based on that path. Alternatively if I use image.path, it breaks production and ImageMagick is unable to find the image based on that path in order to manipulate it.
 
 
 ### LICENSE

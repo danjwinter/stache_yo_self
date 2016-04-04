@@ -13,6 +13,7 @@ FactoryGirl.define do
 
     factory :mustache_request_with_user_info do
       association :user_info
+      original_user_image  { File.new("#{Rails.root}/spec/support/stached_dan.jpeg") }
 
       factory :mustache_request_with_user_and_face_data do
         association :face_location

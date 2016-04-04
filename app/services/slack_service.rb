@@ -35,9 +35,9 @@ class SlackService
   end
 
   def self.save_users(slack_team)
-    response = parse(Typhoeus.post("https://slack.com/api/users.list",
-                            params: {token: slack_team.access_token}).options[:response_body])
-
+    # response = parse(Typhoeus.post("https://slack.com/api/users.list",
+                            # params: {token: slack_team.access_token}).options[:response_body])
+    response = slack_user_list(slack_team)
     add_member_data_to_database(response, slack_team)
   end
 
@@ -51,6 +51,11 @@ class SlackService
   end
 
   private
+
+  def self.slack_user_list(slack_team)
+    parse(Typhoeus.post("https://slack.com/api/users.list",
+                            params: {token: slack_team.access_token}).options[:response_body])
+  end
 
   def self.save_user_info(response, mustache_request)
     json_response = parse(response.options[:response_body])
