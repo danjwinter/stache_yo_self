@@ -19,6 +19,7 @@ gem 'aws-sdk', '~>1.66.0'
 gem 'factory_girl_rails'
 gem 'rmagick'
 gem 'typhoeus'
+gem 'sucker_punch', '~> 2.0'
 gem 'simplecov', :require => false, :group => :test
 
 group :development, :test do

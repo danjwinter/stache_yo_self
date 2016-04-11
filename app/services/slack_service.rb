@@ -10,7 +10,6 @@ class SlackService
     request.run
   end
 
-
   def self.post_stached_image(mustache_request)
     Typhoeus.post("https://slack.com/api/chat.postMessage",
                                      params: {channel: mustache_request.channel,
@@ -35,8 +34,6 @@ class SlackService
   end
 
   def self.save_users(slack_team)
-    # response = parse(Typhoeus.post("https://slack.com/api/users.list",
-                            # params: {token: slack_team.access_token}).options[:response_body])
     response = slack_user_list(slack_team)
     add_member_data_to_database(response, slack_team)
   end
@@ -50,6 +47,14 @@ class SlackService
 
   end
 
+  def self.update_user(mustache_request)
+    Typhoeus::Request.new("https://slack.com/api/chat.postMessage",
+    method: :post,
+    params: {channel: mustache_request.channel,
+      token: mustache_request.slack_team.bot_access_token,
+      text: "Finding that lovely face of yours now!"})
+    end
+
   private
 
   def self.slack_user_list(slack_team)
@@ -61,7 +66,7 @@ class SlackService
     json_response = parse(response.options[:response_body])
     mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_192] || json_response[:user][:profile][:image_original]}" ,
                                                  user_full_name: json_response[:user][:real_name])
-    MustacheRequestProcessor.process(mustache_request)
+    MustacheRequestJob.perform_async(mustache_request.id)
   end
 
   def self.add_member_data_to_database(response, slack_team)

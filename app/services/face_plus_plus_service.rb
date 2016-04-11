@@ -9,9 +9,12 @@ class FacePlusPlusService
     request.on_complete do |response|
       json_response = parse(response.options[:response_body])
       save_face_location_info(mustache_request, json_response)
-      MustacheRequestProcessor.process(mustache_request)
+      MustacheRequestJob.perform_async(mustache_request.id)
     end
-    request.run
+    hydra = Typhoeus::Hydra.hydra
+    hydra.queue(request)
+    hydra.queue(SlackService.update_user(mustache_request))
+    hydra.run
   end
 
   private
