@@ -6,7 +6,7 @@ class MustacheRequestProcessor
     elsif mustache_request.has_no_original_image?
       StacheThatPic.save_original_image(mustache_request)
     elsif !mustache_request.face_location
-      AddFaceLocationJob.perform_async(mustache_request)
+      AddFaceLocationJob.perform_async(mustache_request.id)
     elsif mustache_request.headless?
       SlackService.post_headless_response(mustache_request)
     elsif !mustache_request.has_stached_image?

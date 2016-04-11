@@ -82,6 +82,7 @@ RSpec.describe MustacheRequestProcessor do
       allow(StacheThatPic).to receive(:create_image) {nil}
 
       MustacheRequestProcessor.process(mustache_request)
+      # binding.pry
 
       expect(StacheThatPic).to have_received(:create_image)
     end

@@ -1,6 +1,7 @@
 require 'paperclip/matchers'
 require 'simplecov'
 SimpleCov.start 'rails'
+require 'sucker_punch/testing/inline'
 
 
 RSpec.configure do |config|
