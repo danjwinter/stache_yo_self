@@ -91,7 +91,7 @@ RSpec.describe MustacheRequestProcessor do
   describe ".process with stached image" do
     it "sends message to post stached response" do
       mustache_request = create(:mustache_request_with_user_and_face_data)
-      allow(mustache_request).to receive(:has_stached_image?) {true}
+      allow(mustache_request).to receive(:has_no_stached_image?) {false}
 
       allow(SlackService).to receive(:post_stached_image) {nil}
 

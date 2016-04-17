@@ -19,11 +19,19 @@ class MustacheRequest < ActiveRecord::Base
                             }
   do_not_validate_attachment_file_type :original_user_image
 
-  def has_stached_image?
-    stached_user_image.url != "/stached_user_images/original/missing.png"
+  def has_no_stached_image?
+    stached_user_image.url == "/stached_user_images/original/missing.png"
   end
 
   def has_no_original_image?
     original_user_image.url == "/original_user_images/original/missing.png"
+  end
+
+  def has_no_user_info?
+    !user_info
+  end
+
+  def has_no_face_location_data?
+    !face_location
   end
 end
