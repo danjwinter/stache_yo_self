@@ -21,6 +21,7 @@ gem 'rmagick'
 gem 'typhoeus'
 gem 'sucker_punch', '~> 2.0'
 gem 'simplecov', :require => false, :group => :test
+gem 'puma'
 
 group :development, :test do
   gem 'byebug'
