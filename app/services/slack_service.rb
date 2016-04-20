@@ -52,7 +52,7 @@ class SlackService
     method: :post,
     params: {channel: mustache_request.channel,
       token: mustache_request.slack_team.bot_access_token,
-      text: "Finding that lovely face of yours now!"})
+      text: "Finding that lovely face now!"})
     end
 
   private
