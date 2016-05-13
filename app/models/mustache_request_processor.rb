@@ -4,7 +4,6 @@ class MustacheRequestProcessor
     if mustache_request.has_no_user_info?
       SlackService.add_user_info(mustache_request)
     elsif mustache_request.has_no_original_image?
-      puts "has no original image"
       StacheThatPic.save_original_image(mustache_request)
     elsif mustache_request.has_no_face_location_data?
       puts "made it to no face location"
