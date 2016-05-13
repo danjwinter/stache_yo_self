@@ -9,7 +9,8 @@ class StacheThatPic
     puts "image url"
     puts mustache_request.user_info.image_url
     puts "resized"
-    puts resized(mustache_request.user_info.image_url)
+    puts resized(mustache_request.user_info.image_url).to_blob
+    puts "not stuck in resized"
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     puts "created it!"
     mustache_request.original_user_image = processed
