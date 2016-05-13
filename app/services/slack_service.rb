@@ -66,7 +66,7 @@ class SlackService
     json_response = parse(response.options[:response_body])
     mustache_request.user_info = UserInfo.create(image_url: "#{json_response[:user][:profile][:image_512] || json_response[:user][:profile][:image_192] || json_response[:user][:profile][:image_original]}" ,
                                                  user_full_name: json_response[:user][:real_name])
-    MustacheRequestJob.perform_async(mustache_request.id)
+    MustacheRequestProcessor.process(mustache_request)
   end
 
   def self.add_member_data_to_database(response, slack_team)
