@@ -2,14 +2,14 @@ class StacheThatPic
 
   def self.create_image(mustache_request)
     create_and_save_stached_pic_to_user(mustache_request)
-    MustacheRequestJob.perform_async(mustache_request.id)
+    MustacheRequestProcessor.process(mustache_request)
   end
 
   def self.save_original_image(mustache_request)
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     mustache_request.original_user_image = processed
     mustache_request.save
-    MustacheRequestJob.perform_async(mustache_request.id)
+    MustacheRequestProcessor.process(mustache_request)
   end
 
   private
