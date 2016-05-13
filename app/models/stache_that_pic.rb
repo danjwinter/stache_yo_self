@@ -10,8 +10,8 @@ class StacheThatPic
   def self.save_original_image(mustache_request)
     url = mustache_request.user_info.image_url
     puts url
-    puts "magick pic"
-    puts resized(url)
+    puts "resize stuck"
+    puts Magick::Image.read(url).first
     puts "not stuck in magick pic"
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     puts "created it!"
