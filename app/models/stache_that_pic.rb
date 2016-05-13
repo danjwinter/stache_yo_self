@@ -6,7 +6,10 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
-    puts "trying to create processed"
+    puts "image url"
+    puts mustache_request.user_info.image_url
+    puts "resized"
+    puts resized(mustache_request.user_info.image_url)
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     puts "created it!"
     mustache_request.original_user_image = processed
