@@ -11,7 +11,7 @@ class StacheThatPic
     url = mustache_request.user_info.image_url
     puts url
     puts "magick pic"
-    puts stache_magick_pic
+    puts resized(url)
     puts "not stuck in magick pic"
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     puts "created it!"
