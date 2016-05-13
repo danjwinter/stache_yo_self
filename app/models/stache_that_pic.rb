@@ -8,13 +8,7 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
-    url = mustache_request.user_info.image_url
-    puts url
-    puts "resize stuck"
-    puts Magick::Image.read(url).first
-    puts "not stuck in magick pic"
     processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
-    puts "created it!"
     mustache_request.original_user_image = processed
     mustache_request.save
     MustacheRequestProcessor.process(mustache_request)
@@ -53,6 +47,7 @@ class StacheThatPic
   end
 
   def self.resized(url)
+    url.gsub!("https", "http")
     Magick::Image.read(url).first.resize_to_fill(400,400)
   end
 
@@ -61,6 +56,8 @@ class StacheThatPic
   end
 
   def self.original_image_magick_pic(mustache_request)
-    Magick::Image.read(mustache_request.original_user_image.url).first
+    url = mustache_request.original_user_image.url
+    url.gsub!("https", "http")
+    Magick::Image.read(url).first
   end
 end
