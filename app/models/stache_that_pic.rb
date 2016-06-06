@@ -8,7 +8,8 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
-    processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
+    processed = URI.parse(mustache_request.user_info.image_url)
+    # processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     mustache_request.original_user_image = processed
     mustache_request.save
     MustacheRequestProcessor.process(mustache_request)
@@ -56,8 +57,7 @@ class StacheThatPic
   end
 
   def self.original_image_magick_pic(mustache_request)
-    url = mustache_request.original_user_image.url
-    url.gsub!("https", "http")
+    url = mustache_request.original_user_image.url(:medium)
     Magick::Image.read(url).first
   end
 end
