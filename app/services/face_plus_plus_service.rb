@@ -2,6 +2,7 @@ class FacePlusPlusService
 
   def self.add_face_location(mustache_request)
     request = Typhoeus::Request.new("https://api-us.faceplusplus.com/facepp/v3/detect",
+                                     method: :post,
                                      params: {return_landmark: 1,
                                               api_key: ENV['FACE_KEY'],
                                               api_secret: ENV['FACE_SECRET'],
