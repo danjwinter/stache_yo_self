@@ -8,6 +8,7 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
+    # binding.pry
     processed = URI.parse(mustache_request.user_info.image_url)
     # processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     mustache_request.original_user_image = processed
