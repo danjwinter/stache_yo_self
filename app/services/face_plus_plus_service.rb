@@ -26,6 +26,8 @@ class FacePlusPlusService
   private
 
   def self.save_face_location_info(mustache_request, json_response)
+    puts "This is the JSON response:"
+    puts json_response
     if json_response[:error] || json_response[:faces].empty?
       mustache_request.update(headless: true)
       mustache_request.face_location = FaceLocation.create
