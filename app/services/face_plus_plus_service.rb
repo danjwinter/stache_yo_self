@@ -45,6 +45,9 @@ class FacePlusPlusService
                                           mouth_right_x: json_response[:faces][0][:landmark][:mouth_right_corner][:x],
                                           mouth_right_y: json_response[:faces][0][:landmark][:mouth_right_corner][:y],
                                           nose_y: json_response[:faces][0][:landmark][:nose_tip][:y])
+      puts "this is the face locatoin we think we found:"
+      puts mustache_request.face_location
+      mustache_request.face_location
     end
   end
 
