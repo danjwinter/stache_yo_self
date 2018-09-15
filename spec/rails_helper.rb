@@ -7,8 +7,8 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'typhoeus/adapters/faraday'
-require 'webmock/rspec'
-WebMock.disable_net_connect!(allow_localhost: false)
+# require 'webmock/rspec'
+# WebMock.disable_net_connect!(allow_localhost: false)
 
 
 
@@ -23,7 +23,7 @@ class FakeImage
   def save
   end
 
-  def url
+  def url(med)
     "https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg"
   end
 end
@@ -61,11 +61,11 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
-VCR.configure do |c|
-  c.cassette_library_dir = "spec/vcr"
-  c.hook_into :typhoeus
-  c.allow_http_connections_when_no_cassette = true
-end
+# VCR.configure do |c|
+#   c.cassette_library_dir = "spec/vcr"
+#   c.hook_into :typhoeus
+#   c.allow_http_connections_when_no_cassette = true
+# end
 
 def json_response
   @json_response ||= JSON.parse(response.body, symbolize_names: true)

@@ -22,10 +22,12 @@ gem 'typhoeus'
 gem 'sucker_punch', '~> 2.0'
 gem 'simplecov', :require => false, :group => :test
 gem 'puma'
+gem 'addressable'
 
 group :development, :test do
   gem 'byebug'
   gem 'pry'
+  gem 'rb-readline'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'shoulda-matchers'
@@ -34,10 +36,10 @@ group :development, :test do
   gem 'launchy'
 end
 
-group :test do
-  gem 'vcr', :git => "https://github.com/danjwinter/vcr"
-  gem 'webmock'
-end
+# group :test do
+#   gem 'vcr', :git => "https://github.com/danjwinter/vcr"
+#   gem 'webmock'
+# end
 
 group :development do
   gem 'web-console', '~> 2.0'

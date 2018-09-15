@@ -10,7 +10,7 @@ RSpec.describe FacePlusPlusService do
 
   describe ".add_face_location" do
     it "adds coordinates for face location to mustache_request" do
-      VCR.use_cassette("TESTface_plus_plus_service#add_face_location") do
+      # VCR.use_cassette("TESTface_plus_plus_service#add_face_location") do
 
         FacePlusPlusService.add_face_location(@mustache_request)
 
@@ -21,7 +21,7 @@ RSpec.describe FacePlusPlusService do
         expect(face_location.mouth_right_x.to_f).to eq 59.465039
         expect(face_location.mouth_right_y.to_f).to eq 51.795703
         expect(face_location.nose_y.to_f).to eq 44.94668
-      end
+      # end
     end
   end
 end
