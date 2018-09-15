@@ -8,9 +8,7 @@ class StacheThatPic
   end
 
   def self.save_original_image(mustache_request)
-    # binding.pry
     processed = URI.parse(mustache_request.user_info.image_url)
-    # processed = URI.parse('https://avatars.slack-edge.com/2016-03-01/23827508289_8e0c5fc47896904c9086_512.jpg')
     # processed = StringIO.open(resized(mustache_request.user_info.image_url).to_blob)
     mustache_request.original_user_image = processed
     mustache_request.save
@@ -21,7 +19,6 @@ class StacheThatPic
 
   def self.create_and_save_stached_pic_to_user(mustache_request)
     stached_pic = stached_user_magick_pic(mustache_request)
-    # processed_image = URI.parse(stached_pic)
     processed_image = StringIO.open(stached_pic.to_blob)
     mustache_request.stached_user_image = processed_image
     mustache_request.save
@@ -32,12 +29,7 @@ class StacheThatPic
     s_magick_pic = resized_stache_magick_pic(mustache_request)
 
     stache_calcs = stache_calculations(mustache_request)
-    puts "STACHE CALCS X THEN Y, SHOULD BE UNDER 400"
-    puts stache_calcs.translate_x
-    puts stache_calcs.translate_y
     user_magick_pic.composite(s_magick_pic,
-                              # 176.87715696,
-                              # 184.650001,
                               stache_calcs.translate_x,
                               stache_calcs.translate_y,
                               Magick::OverCompositeOp)
